@@ -1,4 +1,4 @@
-package com.example.db.persistence;
+package com.luna.db.persistence;
 
 
 
@@ -7,9 +7,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Objects;
 
-import com.example.core.data.User;
-import com.example.db.providers.DAOFactory;
-import com.example.db.providers.DefaultDAO;
+import com.luna.core.data.User;
+import com.luna.db.providers.DAOFactory;
+import com.luna.db.providers.DefaultDAO;
 
 public class UserDAO extends DefaultDAO implements UserDAOI {
 

@@ -1,4 +1,4 @@
-package com.example.core.data;
+package com.luna.core.data;
 
 public class User {
 

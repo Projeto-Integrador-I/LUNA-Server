@@ -1,10 +1,10 @@
-package com.example.demo;
+package com.luna.app;
 
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.core.data.User;
-import com.example.db.persistence.UserDAO;
-import com.example.db.providers.DAOFactory;
+import com.luna.core.data.User;
+import com.luna.db.persistence.UserDAO;
+import com.luna.db.providers.DAOFactory;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
