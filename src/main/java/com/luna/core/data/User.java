@@ -7,6 +7,19 @@ public class User {
     private String email;
     private String name;
     private String password;
+    private int category;
+
+    public final static int CATEGORY_INACTIVE   = 0;
+    public final static int CATEGORY_USER       = 1;
+    public final static int CATEGORY_ADMIN      = 2;
+
+    public static String[] categories =
+    {
+        "inativo",
+        "usuário",
+        "administrador"
+    };
+
 
     public User() {
     }
@@ -53,6 +66,14 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public int getCategory() {
+        return category;
+    }
+
+    public void setCategory(int category) {
+        this.category = category;
     }
 
     @Override

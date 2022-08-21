@@ -5,6 +5,8 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+import com.luna.misc.exception.DAOConfigurationException;
+
 public abstract class DAOFactory {
 
     private static final String PROPERTY_URL = "url";

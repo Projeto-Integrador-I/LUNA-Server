@@ -1,114 +1,155 @@
 package com.luna.db.persistence;
 
-
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Objects;
 
 import com.luna.core.data.User;
+import com.luna.db.persistence.Schema.TableUser;
 import com.luna.db.providers.DAOFactory;
 import com.luna.db.providers.DefaultDAO;
 
-public class UserDAO extends DefaultDAO implements UserDAOI {
+public class UserDAO 
+    extends 
+        DefaultDAO 
+            implements 
+                UserDAOI 
+{
 
-    public UserDAO( DAOFactory driverManager ) {
+    public UserDAO( DAOFactory driverManager ) 
+    {
         super( driverManager );
     }
 
     @Override
-    public void add( User user ) throws SQLException {
+    public void add( User user ) throws SQLException 
+    {
 
         int lastId = getLastId( "users" );
-        if( lastId == -1 ) {
+        if( lastId == -1 )
+        {
             throw new SQLException( "unable to increment user id!" );
         }
 
         user.setId( lastId + 1 );
-        execute( "insert into users values( " + user.getId() + ", '" + user.getLogin() + "', '" + user.getPassword() + "', '" + user.getName() + "', '" + user.getEmail() + "')" );
+        execute( 
+            "insert into " + TableUser.TABLE_NAME + "\n" +
+            "   values( " + 
+                    user.getId()        + ", '" + 
+                    user.getLogin()     + "', '" + 
+                    user.getPassword()  + "', '" + 
+                    user.getName()      + "', '" + 
+                    user.getEmail()     + "', '" + 
+                    user.getCategory() + 
+            "   ')" );
     }
 
     @Override
-    public void delete( User subject ) throws SQLException {
+    public void delete( User subject ) throws SQLException 
+    {
 
-        execute( "delete from users where id = " + subject.getId() );
+        execute( "delete from " + TableUser.TABLE_NAME + " where " + TableUser.ID + " = " + subject.getId() );
     }
 
     @Override
-    public ArrayList<User> fetch() throws SQLException {
-        return fetchUsers( "select * from users", "id" );
+    public ArrayList<User> fetch() throws SQLException 
+    {
+        return fetchUsers( "select * from " + TableUser.TABLE_NAME );
     }
 
     @Override
-    public void update( User subject ) throws SQLException {
+    public void update( User subject ) throws SQLException 
+    {
 
         execute(
-        "update\n" +
-            "        users\n" +
+            "update " + TableUser.TABLE_NAME + "\n" +
             "set\n" +
-            "        login = '" + subject.getLogin() + "',\n" +
-            "        password = '" + subject.getPassword() + "',\n" +
-            "        name = '" + subject.getName() + "',\n" +
-            "        email = '" + subject.getEmail() + "'\n" +
+            "        " + TableUser.LOGIN        + "= '" + subject.getLogin()    + "',\n" +
+            "        " + TableUser.PASSWORD     + "= '" + subject.getPassword() + "',\n" +
+            "        " + TableUser.NAME         + "= '" + subject.getName()     + "',\n" +
+            "        " + TableUser.CATEGORY     + "= '" + subject.getCategory() + "',\n" +
+            "        " + TableUser.EMAIL        + "= '" + subject.getEmail()    + "'\n" +
             "where\n" +
-            "        id = " + subject.getId()
+            "        " + TableUser.ID + " = " + subject.getId()
         );
-
     }
 
     @Override
-    public User get( int id ) throws SQLException {
+    public User get( int id ) throws SQLException 
+    {
 
-        return fetchUser( "select * from users where id = " + id );
+        return fetchUser( "select * from " + TableUser.TABLE_NAME + " where " + TableUser.ID + " = " + id );
     }
 
-    public User get( String login ) throws SQLException {
+    public User get( String login ) throws SQLException 
+    {
 
-        return fetchUser( "select * from users where login = '" + login + "'" );
+        return fetchUser( "select * from " + TableUser.TABLE_NAME + " where " + TableUser.LOGIN + " = '" + login + "'" );
     }
 
-    private ArrayList<User> fetchUsers(String sql, String idColumn) throws SQLException {
+    private ArrayList<User> fetchUsers(String sql ) throws SQLException 
+    {
 
         ArrayList<User> users = new ArrayList<>();
-        try {
+        try 
+        {
             ResultSet resultSet = fetch( sql );
-            if ( resultSet.isBeforeFirst() ) {
-                while ( resultSet.next() ) {
-                    users.add( Objects.requireNonNull( get( resultSet.getInt( idColumn ) ) ) );
+            if ( resultSet.isBeforeFirst() ) 
+            {
+                while ( resultSet.next() ) 
+                {
+                    users.add( buildUser( resultSet ) );
                 }
             }
-        } finally {
+        } 
+        finally 
+        {
             connection.close();
         }
 
         return users;
     }
 
-    private User fetchUser(String sql) throws SQLException {
+    private User fetchUser( String sql ) throws SQLException 
+    {
 
         User user = null;
-        try {
+        try 
+        {
             ResultSet resultSet = fetch( sql );
 
-            if ( resultSet.isBeforeFirst() ) {
-                while ( resultSet.next() ) {
+            if ( resultSet.isBeforeFirst() ) 
+            {
+                while ( resultSet.next() ) 
+                {
 
-                    user = new User();
-                    user.setId( Integer.parseInt( resultSet.getString( "id" ) ) );
-                    user.setName( resultSet.getString("name") );
-                    user.setLogin( resultSet.getString("login") );
-                    user.setPassword( resultSet.getString("password") );
-                    user.setEmail( resultSet.getString("email") );
+                    user = buildUser( resultSet );
                 }
             }
-        } catch ( SQLException e  ) {
+        } 
+        catch ( SQLException e  ) 
+        {
             user = null;
             throw e;
 
-        } finally {
+        } 
+        finally 
+        {
             connection.close();
         }
+
+        return user;
+    }
+
+    private User buildUser( ResultSet resultSet ) throws SQLException
+    {
+        User user = new User();
+        user.setPassword( resultSet.getString( TableUser.PASSWORD) );
+        user.setCategory( resultSet.getInt( TableUser.CATEGORY) );        
+        user.setName( resultSet.getString( TableUser.NAME ) );
+        user.setEmail( resultSet.getString( TableUser.EMAIL ) );
+        user.setLogin( resultSet.getString( TableUser.LOGIN ) );
+        user.setId( resultSet.getInt( TableUser.ID ) );
 
         return user;
     }

@@ -1,4 +1,4 @@
-package com.luna.db.providers;
+package com.luna.misc.exception;
 
 public class DAOConfigurationException extends RuntimeException {
 

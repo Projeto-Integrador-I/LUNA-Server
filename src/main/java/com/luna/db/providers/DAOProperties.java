@@ -1,11 +1,12 @@
 package com.luna.db.providers;
 
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
 import org.springframework.core.io.ClassPathResource;
+
+import com.luna.misc.exception.DAOConfigurationException;
 
 public class DAOProperties {
 
