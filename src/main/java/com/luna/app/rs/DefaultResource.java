@@ -6,6 +6,11 @@ import org.springframework.http.ResponseEntity;
 public class DefaultResource 
 {
     
+    protected ResponseEntity<String> dynamicResponse( String info, int code ) 
+    {
+        return new ResponseEntity<>( info, HttpStatus.valueOf( code ) );
+    }  
+
     protected ResponseEntity<String> notFound( String info ) 
     {
         return new ResponseEntity<>( info, HttpStatus.NOT_FOUND );

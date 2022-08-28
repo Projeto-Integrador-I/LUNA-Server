@@ -19,4 +19,13 @@ public class Validator {
     public static void validateName( String name ) throws Exception {
 
     }
+
+    public static void requireNotNullOrEmpty( String value, Exception e ) throws Exception 
+    {
+        if( value == null || value.isEmpty() )
+        {
+            throw e;
+        }
+    }
+
 }
