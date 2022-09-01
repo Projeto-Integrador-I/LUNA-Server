@@ -52,7 +52,7 @@ public class RequestProvider {
         validate();
         Map<String, Object> jsonMap = new HashMap<>();
 
-        URL URL = new URL( url + "/" + path  +  buildParams() );
+        URL URL = new URL( url + "/" + path  +  buildParams() + "&l=portuguese" );
         HttpURLConnection connection = (HttpURLConnection) URL.openConnection();
         connection.setRequestMethod( "GET" );
 
@@ -62,7 +62,8 @@ public class RequestProvider {
         }
         
         int responseCode = connection.getResponseCode();
-        if( responseCode >= 200 && responseCode <= 299 )
+
+        if ( responseCode >= 200 && responseCode <= 299 )
         {
             InputStream responseStream = connection.getInputStream();
             jsonMap = gson.fromJson( new String(responseStream.readAllBytes()) , Map.class);

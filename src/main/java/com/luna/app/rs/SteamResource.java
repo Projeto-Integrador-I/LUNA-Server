@@ -25,7 +25,7 @@ public class SteamResource
         try 
         {
             Object game = controller.getGameByAppId( appids );
-            if( game == null )
+            if ( game == null )
             {
                 return notFound( "game not found for the given appids" );
             }
