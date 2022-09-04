@@ -21,9 +21,10 @@ public class DefaultResource
         return new ResponseEntity<>( info, HttpStatus.BAD_REQUEST );
     }    
 
-    protected ResponseEntity<String> internalServerError( String info ) 
+    protected ResponseEntity<String> internalServerError(  Throwable e ) 
     {
-        return new ResponseEntity<>( info, HttpStatus.INTERNAL_SERVER_ERROR );
+        e.printStackTrace();
+        return new ResponseEntity<>( e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR );
     }        
 
     protected ResponseEntity<String> ok( String jsonString ) 
@@ -44,5 +45,10 @@ public class DefaultResource
     protected ResponseEntity<String> noContent() 
     {
         return new ResponseEntity<>( HttpStatus.NO_CONTENT );
+    }            
+
+    protected ResponseEntity<String> unauthorized( String info ) 
+    {
+        return new ResponseEntity<>( info, HttpStatus.UNAUTHORIZED );
     }            
 }
