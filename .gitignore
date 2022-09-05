@@ -19,5 +19,3 @@ bin/
 
 ### VS Code ###
 .vscode/
-
-createDatabase.sql
