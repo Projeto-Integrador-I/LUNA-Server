@@ -52,7 +52,7 @@ public class RequestProvider {
         validate();
         Map<String, Object> jsonMap = new HashMap<>();
 
-        URL URL = new URL( url + "/" + path  +  buildParams() + "&l=portuguese" );
+        URL URL = new URL( url + "/" + path  +  buildParams() );
         HttpURLConnection connection = (HttpURLConnection) URL.openConnection();
         connection.setRequestMethod( "GET" );
 
