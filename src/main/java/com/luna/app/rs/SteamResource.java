@@ -38,8 +38,7 @@ public class SteamResource
         }
         catch ( Exception e ) 
         {   
-            e.printStackTrace();
-            return internalServerError( e.getMessage() );
+            return internalServerError( e );
         }
     }    
 }

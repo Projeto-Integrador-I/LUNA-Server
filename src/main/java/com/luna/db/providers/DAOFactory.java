@@ -69,6 +69,8 @@ public abstract class DAOFactory {
 
         @Override
         Connection getConnection() throws SQLException {
+            
+            //return DriverManager.getConnection(url + "/" + database, username, password);
             return DriverManager.getConnection(url + "/" + database, username, password);
         }
     }

@@ -47,8 +47,7 @@ public class UserResource
         } 
         catch ( Exception e ) 
         {   
-            e.printStackTrace();
-            return internalServerError( e.getMessage() );
+            return internalServerError( e );
         }
     }
 
@@ -67,8 +66,7 @@ public class UserResource
         } 
         catch ( Exception e ) 
         {   
-            e.printStackTrace();
-            return internalServerError( e.getMessage() );
+            return internalServerError( e );
         }
     }
 
@@ -88,8 +86,7 @@ public class UserResource
         }
         catch ( Exception e ) 
         {   
-            e.printStackTrace();
-            return internalServerError( e.getMessage() );
+            return internalServerError( e );
         }        
     }
 
@@ -117,8 +114,7 @@ public class UserResource
         }
         catch ( Exception e ) 
         {   
-            e.printStackTrace();
-            return internalServerError( e.getMessage() );
+            return internalServerError( e );
         }        
     }
 
@@ -140,8 +136,7 @@ public class UserResource
         } 
         catch ( Exception e ) 
         {   
-            e.printStackTrace();
-            return internalServerError( e.getMessage() );
+            return internalServerError( e );
         }
     }
 }
