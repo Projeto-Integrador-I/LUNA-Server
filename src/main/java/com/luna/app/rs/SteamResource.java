@@ -1,6 +1,5 @@
 package com.luna.app.rs;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
@@ -57,17 +56,7 @@ public class SteamResource
                 return notFound( "game not found for the given appids" );
             }
 
-            ArrayList<Object> jsonsList = new ArrayList<>();
-            
-            for ( Object game : games ) 
-            {
-                if ( game != null )
-                {
-                    jsonsList.add( gson.toJson( game ) );
-                }
-            }
-
-            return ok( gson.toJson( jsonsList ) );
+            return ok( gson.toJson( games ) );
         }
 
         catch( RequestException e )

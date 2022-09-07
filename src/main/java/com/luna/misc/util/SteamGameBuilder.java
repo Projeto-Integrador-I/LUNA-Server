@@ -8,10 +8,12 @@ import com.luna.core.data.Game;
 
 public class SteamGameBuilder 
 {
-    
-    public static Game buildGame( Game game, Map<String, Object> json, String appId ) {
+    public static Game buildGame( Map<String, Object> json, String appId )
+     {
+        Game game = null;
+
         Map <String, Object> app = (Map <String,Object>)json.get( appId );
-        boolean sucess = (boolean)app.get("success");
+        boolean sucess = (boolean)app.get("success" );
 
         if ( sucess ) 
         {
@@ -19,6 +21,8 @@ public class SteamGameBuilder
 
             if ( appData.get("type").toString().equals("game") )
             {
+                game = new Game();
+
                 Map<String, Object> priceOverview = (Map <String,Object>)appData.get( "price_overview" );
                 Map<String, Object> releaseDateMap = (Map <String,Object>)appData.get( "release_date" );
     
@@ -57,18 +61,8 @@ public class SteamGameBuilder
                 game.setGenres( (ArrayList<String>)appData.get( "genres" ) );
                 game.setReleaseDate( ( releaseDateMap != null && !releaseDateMap.isEmpty() ) ? releaseDateMap.get("date").toString() : "data not found" );
             }
-
-            else
-            {
-                return null;
-            } 
         }
 
-        else
-        {
-            return null;
-        }
-        
         return game;
     }
 }

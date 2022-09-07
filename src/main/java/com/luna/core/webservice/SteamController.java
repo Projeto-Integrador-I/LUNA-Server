@@ -39,8 +39,9 @@ public class SteamController
         RequestProvider requestProvider = new RequestProvider( "http://api.steampowered.com/ISteamApps/GetAppList/" );
 
         HashMap<String, String> queryParams = new HashMap<String, String>();
-        queryParams.put( "key=", "STEAMKEY&format=json" );
-
+        queryParams.put( "key", "STEAMKEY" );
+        queryParams.put( "format", "json" );
+        
         Map<String, Object> json = requestProvider.setPath( "v0002" )
                                                   .setQueryParam( queryParams )
                                                   .addHeader( HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE )
@@ -49,7 +50,7 @@ public class SteamController
         Map<String, Object> app = (Map<String, Object>)json.get( "applist" );
         ArrayList<Object> appList = (ArrayList<Object>)app.get( "apps" );
         
-        List<Object> result = appList.stream().filter( g -> g.toString().contains( name ) ).collect( Collectors.toList() );
+        List<Object> result = appList.stream().filter( g -> g.toString().toLowerCase().contains( name.toLowerCase() ) ).collect( Collectors.toList() );
 
         ArrayList<Object> game = new ArrayList<>();
 
@@ -67,6 +68,7 @@ public class SteamController
     {
         HashMap<String, String> queryParams = new HashMap<String, String>();
         queryParams.put( "appids", appId );
+        queryParams.put( "l", "portuguese" );
 
         RequestProvider requestProvider = new RequestProvider( steamUrl );
 
@@ -75,6 +77,6 @@ public class SteamController
                                                   .addHeader( HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE )
                                                   .get();
 
-        return SteamGameBuilder.buildGame( new Game(), json, appId );
+        return SteamGameBuilder.buildGame( json, appId );
     }
 }
