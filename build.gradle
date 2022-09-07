@@ -16,7 +16,7 @@ configurations {
 }
 
 war {
-    archiveName = 'demo.war'
+    archiveName = 'luna.war'
 }
 
 repositories {
