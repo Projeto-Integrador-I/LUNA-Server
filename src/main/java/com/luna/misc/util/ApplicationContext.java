@@ -1,5 +1,7 @@
 package com.luna.misc.util;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
 public class ApplicationContext {
 
     private static ApplicationContext defaultInstance;
@@ -16,5 +18,11 @@ public class ApplicationContext {
 
         return defaultInstance;
     }
+
+    public static String encodePassword( String password ) 
+    {
+        return new BCryptPasswordEncoder().encode( password );
+    }
+
 }
 

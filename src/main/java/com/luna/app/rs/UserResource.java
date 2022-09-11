@@ -17,6 +17,7 @@ import com.google.gson.Gson;
 import com.luna.core.data.User;
 import com.luna.db.persistence.UserDAO;
 import com.luna.db.providers.DAOFactory;
+import com.luna.misc.util.ApplicationContext;
 
 @RestController
 public class UserResource 
@@ -76,7 +77,9 @@ public class UserResource
         try 
         {
             User user = gson.fromJson( body, User.class );
+            user.setPassword( ApplicationContext.encodePassword( user.getPassword() ) );
             userDAO.add(user);
+
 
             return created( gson.toJson( user ) );
         } 
@@ -102,6 +105,7 @@ public class UserResource
             }
 
             User user = gson.fromJson( body, User.class );
+            user.setPassword( ApplicationContext.encodePassword( user.getPassword() ) );            
             user.setId( id );
 
             userDAO.update( user );
