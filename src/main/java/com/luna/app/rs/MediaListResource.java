@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.google.gson.Gson;
 import com.luna.core.data.MediaList;
 import com.luna.db.persistence.MediaListDAO;
+import com.luna.db.persistence.UserDAO;
 import com.luna.db.providers.DAOFactory;
 
 @RestController
@@ -23,14 +24,10 @@ public class MediaListResource
     extends
         DefaultResource
 {
-    private final MediaListDAO mediaListDAO;
-    private final Gson gson;
+    private final MediaListDAO mediaListDAO =( MediaListDAO) DAOFactory.getInstance().get( MediaListDAO.class );;
+    private final UserDAO userDAO = (UserDAO) DAOFactory.getInstance().get( UserDAO.class );
 
-    public MediaListResource()
-    {
-        this.mediaListDAO = (MediaListDAO) DAOFactory.getInstance().get( MediaListDAO.class );
-        gson = new Gson();
-    }
+    private final Gson gson = new Gson();
 
     @GetMapping( value="mediaLists/{id}" )
     public ResponseEntity<String> getMediaList( @PathVariable( "id" ) int id ) 
@@ -76,8 +73,13 @@ public class MediaListResource
         try 
         {
             MediaList mediaList = gson.fromJson( body, MediaList.class );
-            mediaListDAO.add(mediaList);
 
+            if( userDAO.get( mediaList.getUserId() )  == null )
+            {
+                return badRequest( "no such user: " + mediaList.getUserId() );
+            }
+
+            mediaListDAO.add(mediaList);
 
             return created( gson.toJson( mediaList ) );
         } 
@@ -103,8 +105,13 @@ public class MediaListResource
             }
 
             MediaList mediaList = gson.fromJson( body, MediaList.class );
-            mediaList.setId( id );
 
+            if( userDAO.get( mediaList.getUserId() )  == null )
+            {
+                return badRequest( "no such user: " + mediaList.getUserId() );
+            }
+
+            mediaList.setId( id );
             mediaListDAO.update( mediaList );
 
             return ok( gson.toJson( mediaList ) );

@@ -7,10 +7,6 @@ public class MediaList
     private String name;
     private int userId;
 
-    public final static int CATEGORY_INACTIVE   = 0;
-    public final static int CATEGORY_USER       = 1;
-    public final static int CATEGORY_ADMIN      = 2;
-
     public MediaList() {
     }
 
