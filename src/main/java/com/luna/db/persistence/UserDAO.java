@@ -77,13 +77,11 @@ public class UserDAO
     @Override
     public User get( int id ) throws SQLException 
     {
-
         return fetchUser( "select * from " + TableUser.TABLE_NAME + " where " + TableUser.ID + " = " + id );
     }
 
     public User get( String login ) throws SQLException 
     {
-
         return fetchUser( "select * from " + TableUser.TABLE_NAME + " where " + TableUser.LOGIN + " = '" + login + "'" );
     }
 
