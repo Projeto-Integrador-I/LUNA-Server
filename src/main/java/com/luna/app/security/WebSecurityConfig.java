@@ -52,7 +52,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter
     {
         httpSecurity.csrf().disable()
         // Not checked
-        .authorizeRequests().antMatchers( "/authenticate" ).permitAll()
+        .authorizeRequests().antMatchers( "/authenticate", "/users" ).permitAll()
         
         // Any others have to be checked 
         .anyRequest().authenticated().and()
