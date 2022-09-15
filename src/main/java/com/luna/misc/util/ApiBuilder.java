@@ -5,8 +5,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.luna.core.data.Game;
+import com.luna.core.data.Movie;
 
-public class SteamGameBuilder 
+public class ApiBuilder 
 {
     public static Game buildGame( Map<String, Object> json, String appId )
      {
@@ -64,5 +65,12 @@ public class SteamGameBuilder
         }
 
         return game;
+    }
+
+    public static Movie buildMovie( Map<String, Object> json, String id )
+    {
+        Movie movie = null;
+
+        return movie;
     }
 }
