@@ -1,5 +1,7 @@
 package com.luna.app.rs;
 
+import java.util.List;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -20,7 +22,7 @@ public class TmdbResource
     public TmdbResource(){}
 
     @GetMapping( value="movie" )
-    public ResponseEntity<String> getUser( @RequestParam( "id" ) String id ) 
+    public ResponseEntity<String> getMovieById( @RequestParam( "id" ) String id ) 
     {
         try 
         {
@@ -32,6 +34,31 @@ public class TmdbResource
             }
 
             return ok( gson.toJson( movie ) );
+        }
+
+        catch( RequestException e )
+        {
+            return dynamicResponse( e.getMessage(), e.getCode() );
+        }
+        catch ( Exception e ) 
+        {   
+            return internalServerError( e );
+        }
+    }
+
+    @GetMapping( value="movies" )
+    public ResponseEntity<String> getMovieByname( @RequestParam( "name" ) String name ) 
+    {
+        try 
+        {
+            List<Object> movies = controller.getMovieByName( name );
+
+            if ( movies == null )
+            {
+                return notFound( "movie not found for the given name" );
+            }
+
+            return ok( gson.toJson( movies ) );
         }
 
         catch( RequestException e )

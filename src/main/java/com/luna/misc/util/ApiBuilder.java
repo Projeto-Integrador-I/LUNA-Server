@@ -76,16 +76,19 @@ public class ApiBuilder
         Movie movie = new Movie();
 
         movie.setAdult( Boolean.parseBoolean( json.get("adult").toString() ) );
-        movie.setBackDropPath( json.get( "backdrop_path" ).toString() );
+        movie.setBackDropPath( json.get( "backdrop_path" ) != null ? json.get( "backdrop_path" ).toString() : "" );
 
-        movie.setBelongsToCollection( (Map <String,Object>)json.get( "belongs_to_collection" ) );
+        movie.setBelongsToCollection( (Map <String,Object>)json.get( "belongs_to_collection" ) != null ? (Map <String,Object>)json.get( "belongs_to_collection" ) : null );
 
         ArrayList<Map<String, Object>>  genresMap = (ArrayList< Map<String, Object> >)json.get( "genres" );
         ArrayList<String> genres = new ArrayList<>();
 
-        for ( Map<String,Object> g : genresMap )
+        if ( genresMap != null  )
         {
-            genres.add( g.get("name").toString() );
+            for ( Map<String,Object> g : genresMap )
+            {
+                genres.add( g.get("name").toString() );
+            }
         }
 
         movie.setGenres( genres );
@@ -94,20 +97,23 @@ public class ApiBuilder
         movie.setOriginalTitle( json.get( "original_title" ).toString() );
         movie.setOverView( json.get( "overview" ).toString() );
         movie.setPopularity( Double.parseDouble( json.get( "popularity" ).toString() ) );
-        movie.setPosterPath( json.get( "poster_path" ).toString() );
+        movie.setPosterPath( json.get( "poster_path" ).toString() != null ? json.get( "poster_path" ).toString() : "" );
         
         ArrayList<Map<String, Object>>  companiesMap = (ArrayList< Map<String, Object> >)json.get( "production_companies" );
         ArrayList<String> companies = new ArrayList<>();
 
-        for ( Map<String,Object> c : companiesMap )
+        if ( companiesMap != null )
         {
-            companies.add( c.get("name").toString() );
+            for ( Map<String,Object> c : companiesMap )
+            {
+                companies.add( c.get("name").toString() );
+            }
         }
 
         movie.setProductionCompanies( companies );
-        movie.setReleaseDate( json.get( "release_date").toString() );
+        movie.setReleaseDate( json.get( "release_date").toString() != null ? json.get( "release_date").toString() : null );
         movie.setRuntime( Double.parseDouble( json.get( "runtime" ).toString() ) );
-        movie.setTagLine( json.get( "tagline" ).toString() );
+        movie.setTagLine( json.get( "tagline" ).toString() != null ? json.get( "tagline" ).toString() : null );
         movie.setTitle( json.get( "title" ).toString() );
 
         return movie;
