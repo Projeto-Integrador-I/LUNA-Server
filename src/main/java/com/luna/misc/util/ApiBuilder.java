@@ -1,18 +1,16 @@
 package com.luna.misc.util;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
 
-import com.google.gson.internal.LinkedTreeMap;
 import com.luna.core.data.Game;
 import com.luna.core.data.Movie;
 
 public class ApiBuilder 
 {
+    private static final String IMAGEPATH = "https://image.tmdb.org/t/p/w500";
+
     public static Game buildGame( Map<String, Object> json, String appId )
      {
         Game game = null;
@@ -72,14 +70,27 @@ public class ApiBuilder
     }
 
     public static Movie buildMovie( Map<String, Object> json, String id ) throws Exception
-    {
+    {   
         Movie movie = new Movie();
 
         movie.setAdult( Boolean.parseBoolean( json.get("adult").toString() ) );
-        movie.setBackDropPath( json.get( "backdrop_path" ) != null ? json.get( "backdrop_path" ).toString() : "" );
+        movie.setBackDropPath( json.get( "backdrop_path" ) != null ? IMAGEPATH + json.get( "backdrop_path" ).toString() : "" );
 
-        movie.setBelongsToCollection( (Map <String,Object>)json.get( "belongs_to_collection" ) != null ? (Map <String,Object>)json.get( "belongs_to_collection" ) : null );
+        Map <String,Object> belongsToCollection = (Map <String,Object>)json.get( "belongs_to_collection" );
 
+        if ( belongsToCollection != null )
+        {
+            for ( String key : belongsToCollection.keySet() )  
+            {
+                if ( key.equals( "backdrop_path" ) || key.equals( "poster_path" )  )
+                {
+                    belongsToCollection.replace( key, IMAGEPATH + belongsToCollection.get( key ).toString() );
+                }
+            }
+
+            movie.setBelongsToCollection( belongsToCollection );
+        }
+        
         ArrayList<Map<String, Object>>  genresMap = (ArrayList< Map<String, Object> >)json.get( "genres" );
         ArrayList<String> genres = new ArrayList<>();
 
@@ -97,7 +108,7 @@ public class ApiBuilder
         movie.setOriginalTitle( json.get( "original_title" ).toString() );
         movie.setOverView( json.get( "overview" ).toString() );
         movie.setPopularity( Double.parseDouble( json.get( "popularity" ).toString() ) );
-        movie.setPosterPath( json.get( "poster_path" ).toString() != null ? json.get( "poster_path" ).toString() : "" );
+        movie.setPosterPath( json.get( "poster_path" ) != null ? IMAGEPATH + json.get( "poster_path" ).toString() : "" );
         
         ArrayList<Map<String, Object>>  companiesMap = (ArrayList< Map<String, Object> >)json.get( "production_companies" );
         ArrayList<String> companies = new ArrayList<>();

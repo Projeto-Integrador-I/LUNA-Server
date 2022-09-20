@@ -16,7 +16,6 @@ import com.luna.misc.util.ApiBuilder;
 public class SteamController 
 {
     private static SteamController defaultInstance;
-    private final HashMap<String, String> gamesMap = new HashMap<>();
     private final String steamUrl = "https://store.steampowered.com/api/";
 
     private SteamController() {}
