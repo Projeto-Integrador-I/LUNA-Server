@@ -53,7 +53,7 @@ public class UserResource
     }
 
     @GetMapping( value="users" )
-    public ResponseEntity<String> getUsers( @RequestParam String login ) 
+    public ResponseEntity<String> getUsers( @RequestParam( required = false ) String login ) 
     {
         try 
         {
