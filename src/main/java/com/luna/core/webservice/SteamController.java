@@ -9,12 +9,9 @@ import java.util.stream.Collectors;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 
-import com.google.gson.Gson;
-import com.luna.core.data.Game;
 import com.luna.misc.util.RequestProvider;
-import com.luna.misc.util.SteamGameBuilder;
+import com.luna.misc.util.ApiBuilder;
 
-import ch.qos.logback.core.joran.conditional.ElseAction;
 
 public class SteamController 
 {
@@ -77,6 +74,6 @@ public class SteamController
                                                   .addHeader( HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE )
                                                   .get();
 
-        return SteamGameBuilder.buildGame( json, appId );
+        return ApiBuilder.buildGame( json, appId );
     }
 }
