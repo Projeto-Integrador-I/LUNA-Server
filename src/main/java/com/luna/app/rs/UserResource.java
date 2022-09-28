@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.google.gson.Gson;
@@ -53,17 +53,30 @@ public class UserResource
     }
 
     @GetMapping( value="users" )
-    public ResponseEntity<String> getUsers() 
+    public ResponseEntity<String> getUsers( @RequestParam( required = false ) String login ) 
     {
         try 
         {
-            List<User> users = userDAO.fetch();
-            if( users.isEmpty() )
-            {    
-                return noContent();
+            if( login == null )
+            {
+                List<User> users = userDAO.fetch();
+                if( users.isEmpty() )
+                {    
+                    return noContent();
+                }
+    
+                return ok( gson.toJson( users ) );
             }
+            else
+            {
+                User user = userDAO.get( login );
+                if( user == null )
+                {
+                    return notFound( "user not found for given login: " + login );
+                }
 
-            return ok( gson.toJson( users ) );
+                return ok( gson.toJson( user ) );
+            }
         } 
         catch ( Exception e ) 
         {   
