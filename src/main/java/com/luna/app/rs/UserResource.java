@@ -146,8 +146,7 @@ public class UserResource
                 return notFound( "no such user: " + id );
             }
 
-            user.setCategory( User.CATEGORY_INACTIVE );
-            userDAO.update( user );
+            userDAO.delete( user );
 
             return ok();
         } 
