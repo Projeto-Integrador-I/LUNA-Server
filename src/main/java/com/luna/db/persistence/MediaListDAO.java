@@ -4,8 +4,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import com.luna.core.data.Media;
 import com.luna.core.data.MediaList;
-import com.luna.db.persistence.Schema.TableMediaList;
+import com.luna.db.persistence.Schema.*;
 import com.luna.db.providers.DAOFactory;
 import com.luna.db.providers.DefaultDAO;
 
@@ -15,6 +16,9 @@ public class MediaListDAO
             implements 
                 MediaListDAOI 
 {
+    
+    private final MediaDAO mediaDAO = (MediaDAO) DAOFactory.getInstance().get( MediaDAO.class );
+
     public MediaListDAO( DAOFactory driverManager ) 
     {
         super( driverManager );
@@ -43,8 +47,13 @@ public class MediaListDAO
     @Override
     public void delete( MediaList subject ) throws SQLException 
     {
-
+        deleteAllMaps( subject );
         execute( "delete from " + TableMediaList.TABLE_NAME + " where " + TableMediaList.ID + " = " + subject.getId() );
+    }
+    
+    public void deleteAllMaps( MediaList subject ) throws SQLException 
+    {
+        execute( "delete from " + TableListsMedias.TABLE_NAME + " where " + TableListsMedias.LISTS_ID + " = " + subject.getId() );
     }
 
     @Override
@@ -138,4 +147,27 @@ public class MediaListDAO
         return mediaList;
     }
 
+    public void addMediaToList( MediaList mediaList, Media media ) throws SQLException 
+    {
+        Media dbMedia =  mediaDAO.get( media.getId() );
+        if( dbMedia == null )
+        {
+            mediaDAO.add( media );
+        }
+        else
+        {
+            mediaDAO.update( media );
+        }
+
+        execute( "insert into " + TableListsMedias.TABLE_NAME + " ( " + mediaList.getId() + ", " + media.getId() + " )"  );
+    }
+
+    public void deleteMediaToList( MediaList mediaList, Media media ) throws SQLException 
+    {
+        execute( 
+            "delete from "   + TableListsMedias.TABLE_NAME + 
+            " where "        + TableListsMedias.MEDIAS_ID  + " = " + media.getId() +
+            " and "          + TableListsMedias.LISTS_ID   + " = " + mediaList.getId()       
+        );
+    }    
 }

@@ -4,15 +4,17 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Game 
+    extends 
+        Media
 {
-    private String name = "";
     private double appId = 0;
+
+    private String name = "";
     private double required_age = 0;
     private boolean is_free = false;
     private ArrayList<Object> dlcs = new ArrayList<>();
     private String desc = "";
     private String aboutGame = "";
-    private String shortDesc = "";
     private HashMap<String, String> images = new HashMap<>();
     private String officialWebSite = "";
     private ArrayList<String> developers = new ArrayList<>();
@@ -25,8 +27,6 @@ public class Game
     private ArrayList<String> categories = new ArrayList<>();
     private ArrayList<String> genres = new ArrayList<>();
     private String releaseDate = "";
-
-    
 
     public Game() {
     }
@@ -99,16 +99,6 @@ public class Game
     public void setAboutGame(String aboutGame)
     {
         this.aboutGame = aboutGame;
-    }
- 
-    public String getShortDesc()
-    {
-        return shortDesc;
-    }
- 
-    public void setShortDesc(String short_desc)
-    {
-        this.shortDesc = short_desc;
     }
  
     public HashMap<String, String> getImages()

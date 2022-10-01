@@ -50,7 +50,7 @@ public class ApiBuilder
                 game.setDlcs( (ArrayList<Object>)appData.get( "dlc" ) );
                 game.setDesc( appData.get( "detailed_description" ).toString() != null ? appData.get( "detailed_description" ).toString() : "data not found" );
                 game.setAboutGame( appData.get( "about_the_game" ).toString() != null ? appData.get( "about_the_game" ).toString() : "data not found" );
-                game.setShortDesc( appData.get( "short_description" ).toString() != null ? appData.get( "short_description" ).toString() : "data not found" );
+                game.setDescription( appData.get( "short_description" ).toString() != null ? appData.get( "short_description" ).toString() : "data not found" );
                 game.setImages(images);
                 
                 game.setOfficialWebSite( appData.get("website") != null ? appData.get("website").toString() : "data not found" );

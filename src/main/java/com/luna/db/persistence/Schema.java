@@ -26,4 +26,26 @@ public class Schema {
         public final static String DESCRIPTION  = "description";
     }
 
+    public static class TableListsMedias
+    {
+        public final static String TABLE_NAME = "lists_medias";
+        
+        //columns
+        public final static String MEDIAS_ID  = "medias_id";
+        public final static String LISTS_ID   = "lists_id";
+    }
+
+    public static class TableMedia
+    {
+        public final static String TABLE_NAME = "medias";
+        
+        //columns
+        public final static String ID           = "id";
+        public final static String TITLE        = "title";
+        public final static String YEAR         = "year";
+        public final static String DESCRIPTION  = "description";
+        public final static String TYPE         = "type";
+        public final static String API_ID       = "api_id";
+    }
+
 }

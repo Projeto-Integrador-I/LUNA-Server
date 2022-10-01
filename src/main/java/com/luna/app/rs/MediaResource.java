@@ -14,17 +14,20 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.google.gson.Gson;
+import com.luna.core.data.Media;
 import com.luna.core.data.MediaList;
+import com.luna.db.persistence.MediaDAO;
 import com.luna.db.persistence.MediaListDAO;
 import com.luna.db.persistence.UserDAO;
 import com.luna.db.providers.DAOFactory;
 
 @RestController
-public class MediaListResource 
+public class MediaResource 
     extends
         DefaultResource
 {
-    private final MediaListDAO mediaListDAO =( MediaListDAO) DAOFactory.getInstance().get( MediaListDAO.class );;
+    private final MediaListDAO mediaListDAO = (MediaListDAO) DAOFactory.getInstance().get( MediaListDAO.class );;
+    private final MediaDAO mediaDAO = (MediaDAO) DAOFactory.getInstance().get( MediaDAO.class );;
     private final UserDAO userDAO = (UserDAO) DAOFactory.getInstance().get( UserDAO.class );
 
     private final Gson gson = new Gson();
@@ -146,4 +149,31 @@ public class MediaListResource
             return internalServerError( e );
         }
     }
+
+
+    @PostMapping( value="mediaLists/{mediaLists_id}/medias/{medias_id}" )
+    public ResponseEntity<String> addMediaToMediaList( @PathVariable( "mediaLists_id" ) int mediaLists_id, @PathVariable( "medias_id" ) int medias_id ) 
+    {
+        try 
+        {
+            MediaList mediaList = mediaListDAO.get( mediaLists_id );
+            if( mediaList == null )
+            {    
+                return notFound( "no such mediaList: " + mediaLists_id );
+            }
+
+            Media media = mediaDAO.get( medias_id );
+            if( media == null )
+            {    
+                return notFound( "no such media: " + medias_id );
+            }
+
+            mediaListDAO.addMediaToList(mediaList, media);
+            return ok();
+        } 
+        catch ( Exception e ) 
+        {   
+            return internalServerError( e );
+        }
+    }    
 }

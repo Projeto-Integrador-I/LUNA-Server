@@ -47,7 +47,7 @@ public class UserDAO
     @Override
     public void delete( User subject ) throws SQLException 
     {
-
+        //TODO: cascatear delete
         execute( "delete from " + TableUser.TABLE_NAME + " where " + TableUser.ID + " = " + subject.getId() );
     }
 
