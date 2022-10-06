@@ -2,9 +2,12 @@ package com.luna.misc.util;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import com.luna.core.data.Book;
 import com.luna.core.data.Game;
+import com.luna.core.data.Media;
 import com.luna.core.data.Movie;
 
 public class ApiBuilder 
@@ -50,7 +53,6 @@ public class ApiBuilder
                 game.setDlcs( (ArrayList<Object>)appData.get( "dlc" ) );
                 game.setDesc( appData.get( "detailed_description" ).toString() != null ? appData.get( "detailed_description" ).toString() : "data not found" );
                 game.setAboutGame( appData.get( "about_the_game" ).toString() != null ? appData.get( "about_the_game" ).toString() : "data not found" );
-                game.setDescription( appData.get( "short_description" ).toString() != null ? appData.get( "short_description" ).toString() : "data not found" );
                 game.setImages(images);
                 
                 game.setOfficialWebSite( appData.get("website") != null ? appData.get("website").toString() : "data not found" );
@@ -128,5 +130,63 @@ public class ApiBuilder
         movie.setTitle( json.get( "title" ).toString() );
 
         return movie;
+    }
+
+    public static List<Book> buidBook( Map<String, Object> json ) throws Exception
+    {
+        Book book = null;
+        List<Book> books = new ArrayList<>();
+
+        ArrayList<Map<String, Object>>  itemsList = (ArrayList<Map<String, Object>>) json.get("items");
+
+        if ( itemsList != null || !itemsList.isEmpty() )
+        {
+            for ( Map<String, Object> b : itemsList )
+            {
+                book = new Book( Media.TYPE_BOOK );
+
+                Map<String, Object> volumeInfo = (Map<String, Object>) b.get( "volumeInfo" );
+                
+                if ( volumeInfo != null )
+                {
+                    book.setTitle( volumeInfo.get( "title" ).toString() );
+                    book.setPublisher( volumeInfo.get( "publisher" ) != null ? volumeInfo.get( "publisher" ).toString() : "n/d" );
+                    book.setDescription( volumeInfo.get( "description" ) != null ? volumeInfo.get( "description" ).toString() : "n/d" );
+
+                    ArrayList<Map<String, Object>>  identifiers = (ArrayList<Map<String, Object>>) volumeInfo.get("industryIdentifiers");
+                    
+                    if ( identifiers != null )
+                    {
+                        for ( Map<String,Object> key : identifiers )
+                        {
+                            if ( key.get("type") != null )
+                            {
+                                if ( key.get("type").toString().equals("ISBN_13") )
+                                {
+                                    book.setApiId( key.get( "identifier" ).toString() );
+                                }
+                            }
+                        }
+                    }
+
+                    Map<String, Object>  images = (Map<String, Object>) volumeInfo.get("imageLinks" );
+                    ArrayList<String> imagesLink = new ArrayList<>();
+
+                    if ( images != null )
+                    {
+                        imagesLink.add( images.get( "smallThumbnail" ) != null ? images.get( "smallThumbnail" ).toString() : "n/d" );
+                        imagesLink.add( images.get( "smallThumbnail" ) != null ? images.get( "smallThumbnail" ).toString() : "n/d" );
+                    }
+
+                    book.setImageLinks( imagesLink );
+                    book.setPageCount( volumeInfo.get( "pageCount" ) != null ? volumeInfo.get( "pageCount" ).toString() : "0");
+                    book.setCategories( (ArrayList<String>) volumeInfo.get("categories") );
+                    book.setLanguage( volumeInfo.get( "language" ).toString() );
+                }
+                books.add(book);
+            }
+        }
+
+        return books;
     }
 }
