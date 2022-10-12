@@ -111,6 +111,11 @@ public class SteamController
             {
                 games.add( getGameByAppId( game.get("appid").toString().replace( ".0", "") ) );
             }
+
+            else
+            {
+                break;
+            }
         }
 
         return games;
