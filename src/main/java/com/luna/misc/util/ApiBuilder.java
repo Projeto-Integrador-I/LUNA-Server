@@ -189,4 +189,9 @@ public class ApiBuilder
 
         return books;
     }
+
+    public static String buidImagePath( String image ) throws Exception
+    {
+        return IMAGEPATH + image;
+    }
 }

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.google.gson.Gson;
 import com.luna.core.webservice.TmdbController;
 import com.luna.misc.exception.RequestException;
+import com.luna.misc.util.ApiBuilder;
 
 @RestController
 public class TmdbResource 
@@ -59,6 +60,42 @@ public class TmdbResource
             }
 
             return ok( gson.toJson( movies ) );
+        }
+
+        catch( RequestException e )
+        {
+            return dynamicResponse( e.getMessage(), e.getCode() );
+        }
+        catch ( Exception e ) 
+        {   
+            return internalServerError( e );
+        }
+    }
+
+    @GetMapping( value="trending" )
+    public ResponseEntity<String> getTrendingMovies() 
+    {
+        try 
+        {
+            return ok( gson.toJson( controller.getTrendingMovies() ) );
+        }
+
+        catch( RequestException e )
+        {
+            return dynamicResponse( e.getMessage(), e.getCode() );
+        }
+        catch ( Exception e ) 
+        {   
+            return internalServerError( e );
+        }
+    }
+
+    @GetMapping( value="image-path" )
+    public ResponseEntity<String> getImagePath(@RequestParam( "path" ) String path) 
+    {
+        try 
+        {
+            return ok( ApiBuilder.buidImagePath( path ) );
         }
 
         catch( RequestException e )

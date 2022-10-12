@@ -74,4 +74,19 @@ public class TmdbController
         
         return movies;
     }
+
+    public Map<String, Object> getTrendingMovies() throws Exception
+    {
+        HashMap<String, String> queryParams = new HashMap<String, String>();
+        queryParams.put( "api_key", APIKEY );
+        queryParams.put( "language", "pt-BR" );
+        
+        RequestProvider requestProvider = new RequestProvider( tmdbUrl );
+
+        Map<String, Object> json = requestProvider.setPath( "trending/all/day" )
+                                                  .setQueryParam( queryParams )
+                                                  .addHeader( HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE )
+                                                  .get();
+        return json;
+    }
 }
