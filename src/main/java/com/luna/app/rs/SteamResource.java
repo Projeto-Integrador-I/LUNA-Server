@@ -69,5 +69,33 @@ public class SteamResource
             return internalServerError( e );
         }
     }
+
+    @GetMapping( value = "most-played" )
+    public ResponseEntity<String> getMostPlayedGames()
+    {
+
+        try 
+        {
+            List<Object> games = controller.getMostPlayedGames();
+
+            if ( games == null || games.isEmpty() )
+            {
+                return notFound( "game not found for the given appids" );
+            }
+
+            return ok( gson.toJson( games ) );
+        }
+
+        catch( RequestException e )
+        {
+            return dynamicResponse( e.getMessage(), e.getCode() );
+        }
+
+        catch ( Exception e ) 
+        {   
+            return internalServerError( e );
+        }
+    }
+
 }
 

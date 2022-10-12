@@ -86,7 +86,7 @@ public class RequestProvider {
     {
         String params = "";
 
-        for( String key : queryParams.keySet() )
+        for ( String key : queryParams.keySet() )
         {
             params += params.isEmpty() ? "?" + key + "=" + queryParams.get( key ) : "&" + key + "=" + queryParams.get( key ); 
         }
