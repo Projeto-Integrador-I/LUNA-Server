@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.google.gson.Gson;
+import com.luna.core.data.Movie;
 import com.luna.core.webservice.TmdbController;
 import com.luna.misc.exception.RequestException;
 import com.luna.misc.util.ApiBuilder;
@@ -27,7 +28,7 @@ public class TmdbResource
     {
         try 
         {
-            Object movie = controller.getMovieById( id );
+            Object movie = controller.getMovieById( id, TmdbController.TYPE_MOVIE );
 
             if ( movie == null )
             {
@@ -52,7 +53,7 @@ public class TmdbResource
     {
         try 
         {
-            List<Object> movies = controller.getMovieByName( name );
+            List<Movie> movies = controller.getMovieByName( name );
 
             if ( movies == null )
             {
@@ -72,12 +73,14 @@ public class TmdbResource
         }
     }
 
-    @GetMapping( value="trending" )
+    @GetMapping( value="trending-movies" )
     public ResponseEntity<String> getTrendingMovies() 
     {
         try 
         {
-            return ok( gson.toJson( controller.getTrendingMovies() ) );
+            List<Movie> movies = controller.getTrendingMovies();
+
+            return ok( gson.toJson( movies ) );
         }
 
         catch( RequestException e )
@@ -90,12 +93,15 @@ public class TmdbResource
         }
     }
 
-    @GetMapping( value="image-path" )
-    public ResponseEntity<String> getImagePath(@RequestParam( "path" ) String path) 
+    
+    @GetMapping( value="trending-tv" )
+    public ResponseEntity<String> getTrandingTv() 
     {
         try 
         {
-            return ok( ApiBuilder.buidImagePath( path ) );
+            List<Movie> tvs = controller.getTrandingTv();
+
+            return ok( gson.toJson( tvs ) );
         }
 
         catch( RequestException e )

@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.google.gson.Gson;
+import com.luna.core.data.Game;
 import com.luna.core.webservice.SteamController;
 import com.luna.misc.exception.RequestException;
 
@@ -26,7 +27,7 @@ public class SteamResource
     {
         try 
         {
-            Object game = controller.getGameByAppId( appids );
+            Game game = controller.getGameByAppId( appids );
             if ( game == null )
             {
                 return notFound( "game not found for the given appids" );
@@ -49,7 +50,7 @@ public class SteamResource
     {
         try 
         {
-            List<Object> games = controller.getGamesByName( name );
+            List<Game> games = controller.getGamesByName( name );
 
             if ( games == null || games.isEmpty() )
             {
@@ -76,7 +77,7 @@ public class SteamResource
 
         try 
         {
-            List<Object> games = controller.getMostPlayedGames();
+            List<Game> games = controller.getMostPlayedGames();
 
             if ( games == null || games.isEmpty() )
             {

@@ -15,19 +15,21 @@ public class Movie
     private String posterPath = "";
     private String tagLine = "";
     private String title = "";
-
+    private String type = "";
+    
     private double id = 0;
     private double runtime = 0;
-
     private double popularity = 0;
 
+    private int seasons = 0;
+    
     private String releaseDate = null; 
-
+    
     private Map<String,Object> belongsToCollection = new HashMap<>();
     private ArrayList<String> productionCompanies = new ArrayList<>();
-
+    
     private ArrayList<String> genres = new ArrayList<>();
-
+    
     public Boolean getAdult() {
         return adult;
     }
@@ -74,6 +76,27 @@ public class Movie
 
     public void setPosterPath(String posterPath) {
         this.posterPath = posterPath;
+    }
+
+    
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public void setPopularity(double popularity) {
+        this.popularity = popularity;
+    }
+
+    public int getSeasons() {
+        return seasons;
+    }
+
+    public void setSeasons(int seasons) {
+        this.seasons = seasons;
     }
 
     public String getTagLine() {

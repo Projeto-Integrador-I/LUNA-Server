@@ -107,7 +107,7 @@ public class ApiBuilder
         movie.setGenres( genres );
         movie.setId( (double)json.get( "id" ) );
         movie.setOriginalLang( json.get( "original_language" ).toString() );
-        movie.setOriginalTitle( json.get( "original_title" ).toString() );
+        movie.setOriginalTitle( json.get( "original_title" ) != null ? json.get( "original_title" ).toString() :  json.get( "original_name" ).toString() );
         movie.setOverView( json.get( "overview" ).toString() );
         movie.setPopularity( Double.parseDouble( json.get( "popularity" ).toString() ) );
         movie.setPosterPath( json.get( "poster_path" ) != null ? IMAGEPATH + json.get( "poster_path" ).toString() : "" );
@@ -124,10 +124,16 @@ public class ApiBuilder
         }
 
         movie.setProductionCompanies( companies );
-        movie.setReleaseDate( json.get( "release_date").toString() != null ? json.get( "release_date").toString() : null );
-        movie.setRuntime( Double.parseDouble( json.get( "runtime" ).toString() ) );
+        movie.setReleaseDate( json.get( "release_date") != null ? json.get( "release_date").toString() : null );
+        movie.setRuntime( json.get( "runtime" ) != null ? Double.parseDouble( json.get( "runtime" ).toString() ) : 0 );
         movie.setTagLine( json.get( "tagline" ).toString() != null ? json.get( "tagline" ).toString() : null );
-        movie.setTitle( json.get( "title" ).toString() );
+        movie.setTitle( json.get( "title" ) != null ? json.get( "title" ).toString() : json.get( "name" ).toString()  );
+
+        if ( json.get( "seasons" ) != null )
+        {
+            ArrayList<String> seasons = (ArrayList<String>)json.get( "seasons" );
+            movie.setSeasons( seasons.size() );
+        }
 
         return movie;
     }
@@ -188,10 +194,5 @@ public class ApiBuilder
         }
 
         return books;
-    }
-
-    public static String buidImagePath( String image ) throws Exception
-    {
-        return IMAGEPATH + image;
     }
 }

@@ -10,6 +10,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 
 import com.luna.misc.util.RequestProvider;
+import com.luna.core.data.Game;
 import com.luna.misc.util.ApiBuilder;
 
 
@@ -18,6 +19,7 @@ public class SteamController
     private final String steamUrl = "https://store.steampowered.com/api/";
     private final String steamUrlApi = "https://api.steampowered.com";
     private final String APIKEY = "E9A9A76AA134F583B3BC4DBD977504DD";
+    private ArrayList<Game> games = new ArrayList<>();
 
     private static SteamController defaultInstance;
     private Map<String, Object> fullGameList = new HashMap<>();
@@ -37,7 +39,7 @@ public class SteamController
         return defaultInstance;
     }
 
-    public List<Object> getGamesByName( String name ) throws Exception
+    public List<Game> getGamesByName( String name ) throws Exception
     {
         RequestProvider requestProvider = new RequestProvider( "http://api.steampowered.com/ISteamApps/GetAppList/" );
         
@@ -60,7 +62,7 @@ public class SteamController
         
         List<Object> result = appList.stream().filter( g -> g.toString().toLowerCase().contains( name.toLowerCase() ) ).collect( Collectors.toList() );
 
-        ArrayList<Object> game = new ArrayList<>();
+        ArrayList<Game> game = new ArrayList<>();
 
         for ( Object gameFiltered : result )
         {
@@ -72,7 +74,7 @@ public class SteamController
         return game;                                              
     }
 
-    public Object getGameByAppId( String appId ) throws Exception 
+    public Game getGameByAppId( String appId ) throws Exception 
     {
         queryParams.clear();
         queryParams.put( "appids", appId );
@@ -88,7 +90,7 @@ public class SteamController
         return ApiBuilder.buildGame( json, appId );
     }
 
-    public List<Object> getMostPlayedGames() throws Exception
+    public List<Game> getMostPlayedGames() throws Exception
     {
         queryParams.clear();
         queryParams.put("", APIKEY );
@@ -102,8 +104,6 @@ public class SteamController
 
         Map<String, Object> response = (Map<String, Object>)json.get( "response" );
         ArrayList<Map<String,Object>> ranks = (ArrayList<Map<String,Object>>)response.get( "ranks" );
-
-        ArrayList<Object> games = new ArrayList<>();
 
         for( Map<String,Object> game : ranks )
         {
