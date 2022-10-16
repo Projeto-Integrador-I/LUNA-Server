@@ -12,25 +12,25 @@ import com.luna.core.data.Book;
 import com.luna.misc.util.ApiBuilder;
 
 
-public class GbooksController 
+public class BookController 
 {
-    private static GbooksController defaultInstance;
+    private static BookController defaultInstance;
     private final String gBooksUrl = "https://www.googleapis.com/books";
     private static final String APIKEY = "AIzaSyAQ2vcHDt0mXfKbRNDpUD3vICT7OUvZ77U";
 
-    private GbooksController() {}
+    private BookController() {}
 
-    public static GbooksController getInstance() 
+    public static BookController getInstance() 
     {
         if ( defaultInstance == null ) 
         {
-            defaultInstance = new GbooksController();
+            defaultInstance = new BookController();
         }
 
         return defaultInstance;
     }
 
-    public List<Book> getBook( String name ) throws Exception 
+    public List<Book> getBookByName( String name ) throws Exception 
     {
         //https://www.googleapis.com/books/v1/volumes?q=flowers+inauthor:keyes&key=yourAPIKey
         name = name.replaceAll( " ", "+" );

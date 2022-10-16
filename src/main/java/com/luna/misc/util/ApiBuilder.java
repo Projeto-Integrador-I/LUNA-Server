@@ -47,7 +47,7 @@ public class ApiBuilder
                 }
     
                 game.setName( appData.get( "name" ).toString() != null ? appData.get( "name" ).toString() : "data not found");
-                game.setAppId( (double)appData.get( "steam_appid" ) ); 
+                game.setApiId( appData.get( "steam_appid" ).toString() ); 
                 game.setIs_free( (boolean)appData.get( "is_free" ) );
                 game.setRequired_age( Double.parseDouble( appData.get( "required_age" ).toString() ) ); 
                 game.setDlcs( (ArrayList<Object>)appData.get( "dlc" ) );
@@ -105,7 +105,7 @@ public class ApiBuilder
         }
 
         movie.setGenres( genres );
-        movie.setId( (double)json.get( "id" ) );
+        movie.setApiId( json.get( "id" ).toString() );
         movie.setOriginalLang( json.get( "original_language" ).toString() );
         movie.setOriginalTitle( json.get( "original_title" ) != null ? json.get( "original_title" ).toString() :  json.get( "original_name" ).toString() );
         movie.setOverView( json.get( "overview" ).toString() );
@@ -129,6 +129,8 @@ public class ApiBuilder
         movie.setTagLine( json.get( "tagline" ).toString() != null ? json.get( "tagline" ).toString() : null );
         movie.setTitle( json.get( "title" ) != null ? json.get( "title" ).toString() : json.get( "name" ).toString()  );
 
+        movie.setType( Media.TYPE_MOVIE );
+
         if ( json.get( "seasons" ) != null )
         {
             ArrayList<String> seasons = (ArrayList<String>)json.get( "seasons" );
@@ -149,7 +151,7 @@ public class ApiBuilder
         {
             for ( Map<String, Object> b : itemsList )
             {
-                book = new Book( Media.TYPE_BOOK );
+                book = new Book();
 
                 Map<String, Object> volumeInfo = (Map<String, Object>) b.get( "volumeInfo" );
                 
@@ -188,6 +190,9 @@ public class ApiBuilder
                     book.setPageCount( volumeInfo.get( "pageCount" ) != null ? volumeInfo.get( "pageCount" ).toString() : "0");
                     book.setCategories( (ArrayList<String>) volumeInfo.get("categories") );
                     book.setLanguage( volumeInfo.get( "language" ).toString() );
+
+                    book.setType( Media.TYPE_BOOK );
+
                 }
                 books.add(book);
             }

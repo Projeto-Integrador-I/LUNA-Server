@@ -38,7 +38,8 @@ public class MediaDAO
                     media.getYear()         + "', '" + 
                     media.getDescription()  + "', '" + 
                     media.getType()         + "', '" + 
-                    media.getDescription()  + 
+                    media.getApiId()        + "', '" + 
+                    media.getCoverLink()    +  
             "   ')" );
     }
 
@@ -67,9 +68,10 @@ public class MediaDAO
             "set\n" +
             "        " + TableMedia.TITLE        + " = '" + subject.getTitle()       + "',\n" +
             "        " + TableMedia.YEAR         + " = '" + subject.getYear()        + "',\n" +
-            "        " + TableMedia.DESCRIPTION  + " = '" + subject.getDescription() + ",'\n"  +
-            "        " + TableMedia.TYPE         + " = '" + subject.getType() + ",'\n"  +
-            "        " + TableMedia.API_ID       + " = '" + subject.getApiId() + "'\n"  +
+            "        " + TableMedia.DESCRIPTION  + " = '" + subject.getDescription() + ",'\n" +
+            "        " + TableMedia.TYPE         + " = '" + subject.getType()        + ",'\n" +
+            "        " + TableMedia.API_ID       + " = '" + subject.getApiId()       + ",'\n" +
+            "        " + TableMedia.COVER        + " = '" + subject.getCoverLink()   + "'\n"  +
             "where\n" +
             "        " + TableMedia.ID + " = " + subject.getId()
         );
@@ -79,8 +81,8 @@ public class MediaDAO
     {
         return fetchMedia( 
                     "select * from " + TableMedia.TABLE_NAME + 
-                    " where "        + TableMedia.API_ID + " = " + apiId +
-                    " and "          + TableMedia.TYPE + " = " + type       
+                    " where "        + TableMedia.API_ID     + " = " + apiId +
+                    " and "          + TableMedia.TYPE       + " = " + type       
                 );
     }
 
@@ -153,6 +155,7 @@ public class MediaDAO
         media.setDescription( resultSet.getString( TableMedia.DESCRIPTION ) );
         media.setType( resultSet.getInt( TableMedia.TYPE ) );
         media.setApiId( resultSet.getString( TableMedia.API_ID ) );
+        media.setCoverLink( resultSet.getString( TableMedia.COVER ) );
 
         return media;
     }

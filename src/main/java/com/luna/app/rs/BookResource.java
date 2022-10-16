@@ -9,29 +9,29 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.google.gson.Gson;
 import com.luna.core.data.Book;
-import com.luna.core.webservice.GbooksController;
+import com.luna.core.webservice.BookController;
 import com.luna.misc.exception.RequestException;
 
 @RestController
-public class GbooksResource 
+public class BookResource 
     extends 
         DefaultResource
 {
-    private final GbooksController controller = GbooksController.getInstance();
+    private final BookController controller = BookController.getInstance();
     private final Gson gson = new Gson();
 
-    public GbooksResource(){}
+    public BookResource(){}
 
     @GetMapping( value="book" )
-    public ResponseEntity<String> getMovieById( @RequestParam( "name" ) String name ) 
+    public ResponseEntity<String> getBookByName( @RequestParam( "name" ) String name ) 
     {
         try 
         {
-            List<Book> movie = controller.getBook( name );
+            List<Book> movie = controller.getBookByName( name );
 
             if ( movie == null )
             {
-                return notFound( "movie not found for the given id" );
+                return notFound( "book not found for the given name" );
             }
 
             return ok( gson.toJson( movie ) );

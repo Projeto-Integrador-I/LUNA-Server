@@ -12,7 +12,7 @@ import com.luna.core.data.Movie;
 import com.luna.misc.util.ApiBuilder;
 import com.luna.misc.util.RequestProvider;
 
-public class TmdbController
+public class MovieController
 {
 
     public static final int TYPE_MOVIE = 0;
@@ -24,18 +24,18 @@ public class TmdbController
         "tv/"
     };
 
-    private static TmdbController defaultInstance;
+    private static MovieController defaultInstance;
     private static final String APIKEY = "2063193afeb67536cd95e217e1b4210e";
     private final String tmdbUrl = "http://api.themoviedb.org/3";
 
 
-    private TmdbController() {}
+    private MovieController() {}
 
-    public static TmdbController getInstance() 
+    public static MovieController getInstance() 
     {
         if ( defaultInstance == null ) 
         {
-            defaultInstance = new TmdbController();
+            defaultInstance = new MovieController();
         }
 
         return defaultInstance;

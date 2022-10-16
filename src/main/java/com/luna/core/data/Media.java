@@ -7,12 +7,22 @@ public class Media {
     private String title;
     private String description;
 
+    private String coverLink;
+    
     private int type;
     private String apiId;
     
     public final static int TYPE_GAME   = 0;
     public final static int TYPE_MOVIE  = 1;
     public final static int TYPE_BOOK   = 2;
+    
+    public String getCoverLink() {
+        return this.coverLink;
+    }
+
+    public void setCoverLink(String coverLink) {
+        this.coverLink = coverLink;
+    }
 
     public String getApiId() {
         return this.apiId;

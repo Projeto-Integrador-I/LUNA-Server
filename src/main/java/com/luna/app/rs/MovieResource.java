@@ -9,26 +9,25 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.google.gson.Gson;
 import com.luna.core.data.Movie;
-import com.luna.core.webservice.TmdbController;
+import com.luna.core.webservice.MovieController;
 import com.luna.misc.exception.RequestException;
-import com.luna.misc.util.ApiBuilder;
 
 @RestController
-public class TmdbResource 
+public class MovieResource 
     extends 
         DefaultResource
 {
-    private final TmdbController controller = TmdbController.getInstance();
+    private final MovieController controller = MovieController.getInstance();
     private final Gson gson = new Gson();
 
-    public TmdbResource(){}
+    public MovieResource(){}
 
     @GetMapping( value="movie" )
     public ResponseEntity<String> getMovieById( @RequestParam( "id" ) String id ) 
     {
         try 
         {
-            Object movie = controller.getMovieById( id, TmdbController.TYPE_MOVIE );
+            Object movie = controller.getMovieById( id, MovieController.TYPE_MOVIE );
 
             if ( movie == null )
             {

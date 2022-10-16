@@ -9,18 +9,18 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.google.gson.Gson;
 import com.luna.core.data.Game;
-import com.luna.core.webservice.SteamController;
+import com.luna.core.webservice.GameController;
 import com.luna.misc.exception.RequestException;
 
 @RestController
-public class SteamResource 
+public class GameResource 
     extends 
         DefaultResource
 {
-    private final SteamController controller = SteamController.getInstance();
+    private final GameController controller = GameController.getInstance();
     private final Gson gson = new Gson();
 
-    public SteamResource(){}
+    public GameResource(){}
 
     @GetMapping( value="games" )
     public ResponseEntity<String> getUser( @RequestParam( "appids" ) String appids ) 
@@ -54,7 +54,7 @@ public class SteamResource
 
             if ( games == null || games.isEmpty() )
             {
-                return notFound( "game not found for the given appids" );
+                return notFound( "game not found for the given name" );
             }
 
             return ok( gson.toJson( games ) );
@@ -81,7 +81,7 @@ public class SteamResource
 
             if ( games == null || games.isEmpty() )
             {
-                return notFound( "game not found for the given appids" );
+                return notFound( "no games found" );
             }
 
             return ok( gson.toJson( games ) );

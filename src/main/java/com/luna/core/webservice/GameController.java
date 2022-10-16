@@ -14,26 +14,26 @@ import com.luna.core.data.Game;
 import com.luna.misc.util.ApiBuilder;
 
 
-public class SteamController 
+public class GameController 
 {
     private final String steamUrl = "https://store.steampowered.com/api/";
     private final String steamUrlApi = "https://api.steampowered.com";
     private final String APIKEY = "E9A9A76AA134F583B3BC4DBD977504DD";
     private ArrayList<Game> games = new ArrayList<>();
 
-    private static SteamController defaultInstance;
+    private static GameController defaultInstance;
     private Map<String, Object> fullGameList = new HashMap<>();
     private HashMap<String, String> queryParams = new HashMap<String, String>();
 
     private boolean hasResults = false;
 
-    private SteamController() {}
+    private GameController() {}
 
-    public static SteamController getInstance() 
+    public static GameController getInstance() 
     {
         if ( defaultInstance == null ) 
         {
-            defaultInstance = new SteamController();
+            defaultInstance = new GameController();
         }
 
         return defaultInstance;

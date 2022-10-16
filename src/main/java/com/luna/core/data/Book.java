@@ -6,9 +6,9 @@ public class Book
     extends
          Media
 {
-    public Book( int type ) 
+    public Book()
     {
-        setType( type );
+        setType( TYPE_BOOK );
     }
 
     private String publisher = "";

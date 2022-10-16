@@ -1,6 +1,7 @@
 package com.luna.app.rs;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
@@ -10,12 +11,15 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.google.gson.Gson;
 import com.luna.core.data.Media;
 import com.luna.core.data.MediaList;
+import com.luna.core.webservice.BookController;
+import com.luna.core.webservice.GameController;
+import com.luna.core.webservice.MovieController;
 import com.luna.db.persistence.MediaDAO;
 import com.luna.db.persistence.MediaListDAO;
 import com.luna.db.persistence.UserDAO;
@@ -30,7 +34,40 @@ public class MediaResource
     private final MediaDAO mediaDAO = (MediaDAO) DAOFactory.getInstance().get( MediaDAO.class );;
     private final UserDAO userDAO = (UserDAO) DAOFactory.getInstance().get( UserDAO.class );
 
+    private final GameController gameController = GameController.getInstance();
+    private final MovieController movieController = MovieController.getInstance();
+    private final BookController bookController = BookController.getInstance();
+
+
     private final Gson gson = new Gson();
+
+
+    @GetMapping( value="media/search" )
+    public ResponseEntity<String> getMediaList( @RequestParam( "name" ) String name ) 
+    {
+        try 
+        {
+            List<Media> medias = new ArrayList<Media>();
+            medias.addAll( gameController.getGamesByName( name )  == null ? new ArrayList<Media>() : gameController.getGamesByName( name ) );
+            medias.addAll( movieController.getMovieByName( name ) == null ? new ArrayList<Media>() : movieController.getMovieByName( name ) );
+            medias.addAll( bookController.getBookByName( name )   == null ? new ArrayList<Media>() : bookController.getBookByName( name ));
+
+            if( medias.isEmpty() )
+            {    
+                return notFound( "no medias found" );
+            }
+
+            return ok( gson.toJson( medias ) );
+        } 
+        catch ( Exception e ) 
+        {   
+            return internalServerError( e );
+        }
+    }
+
+
+
+
 
     @GetMapping( value="mediaLists/{id}" )
     public ResponseEntity<String> getMediaList( @PathVariable( "id" ) int id ) 

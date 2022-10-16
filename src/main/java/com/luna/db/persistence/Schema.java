@@ -46,6 +46,7 @@ public class Schema {
         public final static String DESCRIPTION  = "description";
         public final static String TYPE         = "type";
         public final static String API_ID       = "api_id";
+        public final static String COVER        = "cover";
     }
 
 }

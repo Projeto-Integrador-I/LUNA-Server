@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Movie
+    extends
+        Media
 {
     private Boolean adult;
 
@@ -14,10 +16,7 @@ public class Movie
     private String overView = "";
     private String posterPath = "";
     private String tagLine = "";
-    private String title = "";
-    private String type = "";
     
-    private double id = 0;
     private double runtime = 0;
     private double popularity = 0;
 
@@ -30,6 +29,12 @@ public class Movie
     
     private ArrayList<String> genres = new ArrayList<>();
     
+    public Movie(){
+
+        setType( TYPE_MOVIE );
+    }
+
+
     public Boolean getAdult() {
         return adult;
     }
@@ -78,15 +83,6 @@ public class Movie
         this.posterPath = posterPath;
     }
 
-    
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
     public void setPopularity(double popularity) {
         this.popularity = popularity;
     }
@@ -105,23 +101,6 @@ public class Movie
 
     public void setTagLine(String tagLine) {
         this.tagLine = tagLine;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public double getId() {
-        return id;
-    }
-
-    public void setId( double id )
-     {
-        this.id = id;
     }
 
     public double getRuntime() {

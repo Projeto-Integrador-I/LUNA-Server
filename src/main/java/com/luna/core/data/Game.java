@@ -28,7 +28,9 @@ public class Game
     private ArrayList<String> genres = new ArrayList<>();
     private String releaseDate = "";
 
-    public Game() {
+    public Game() 
+    {
+        setType( TYPE_GAME );
     }
 
     public String getName()
