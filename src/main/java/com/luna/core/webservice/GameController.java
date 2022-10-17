@@ -47,15 +47,12 @@ public class GameController
         queryParams.put( "key", "STEAMKEY" );
         queryParams.put( "format", "json" );
         
-        if ( !hasResults )
-        {
-            fullGameList = requestProvider.setPath( "v0002" )
-                                  .setQueryParam( queryParams )
-                                  .addHeader( HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE )
-                                  .get();
+        fullGameList = requestProvider.setPath( "v0002" )
+                                      .setQueryParam( queryParams )
+                                      .addHeader( HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE )
+                                      .get();
 
-            hasResults = true;
-        }
+        hasResults = true;
         
         Map<String, Object> app = (Map<String, Object>)fullGameList.get( "applist" );
         ArrayList<Object> appList = (ArrayList<Object>)app.get( "apps" );
