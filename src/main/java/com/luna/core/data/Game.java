@@ -7,8 +7,6 @@ public class Game
     extends 
         Media
 {
-    private double appId = 0;
-
     private String name = "";
     private double required_age = 0;
     private boolean is_free = false;
@@ -41,16 +39,6 @@ public class Game
     public void setName(String name)
     {
         this.name = name;
-    }
- 
-    public double getAppId()
-    {
-        return appId;
-    }
- 
-    public void setAppId(double appId)
-    {
-        this.appId = appId;
     }
  
     public double getRequired_age()

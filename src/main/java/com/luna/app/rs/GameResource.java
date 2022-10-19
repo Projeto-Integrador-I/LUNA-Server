@@ -74,7 +74,6 @@ public class GameResource
     @GetMapping( value = "most-played" )
     public ResponseEntity<String> getMostPlayedGames()
     {
-
         try 
         {
             List<Game> games = controller.getMostPlayedGames();
