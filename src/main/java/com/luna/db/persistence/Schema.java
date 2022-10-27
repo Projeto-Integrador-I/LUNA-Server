@@ -17,7 +17,7 @@ public class Schema {
 
     public static class TableMediaList
     {
-        public final static String TABLE_NAME = "lists";
+        public final static String TABLE_NAME = "medialists";
         
         //columns
         public final static String ID           = "id";

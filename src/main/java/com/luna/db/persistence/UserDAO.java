@@ -25,7 +25,7 @@ public class UserDAO
     public void add( User user ) throws SQLException 
     {
 
-        int lastId = getLastId( "users" );
+        int lastId = getLastId( Schema.TableUser.TABLE_NAME );
         if( lastId == -1 )
         {
             throw new SQLException( "unable to increment user id!" );

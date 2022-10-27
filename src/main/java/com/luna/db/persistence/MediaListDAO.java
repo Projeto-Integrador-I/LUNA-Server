@@ -27,7 +27,7 @@ public class MediaListDAO
     @Override
     public void add( MediaList mediaList ) throws SQLException 
     {
-        int lastId = getLastId( "mediaLists" );
+        int lastId = getLastId( Schema.TableMediaList.TABLE_NAME );
         if( lastId == -1 )
         {
             throw new SQLException( "unable to increment mediaList id!" );
