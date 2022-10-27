@@ -14,7 +14,6 @@ public class Movie
     private String originalLang = "";
     private String originalTitle = "";
     private String overView = "";
-    private String posterPath = "";
     private String tagLine = "";
     
     private double runtime = 0;
@@ -73,14 +72,6 @@ public class Movie
 
     public void setOverView(String overView) {
         this.overView = overView;
-    }
-
-    public String getPosterPath() {
-        return posterPath;
-    }
-
-    public void setPosterPath(String posterPath) {
-        this.posterPath = posterPath;
     }
 
     public void setPopularity(double popularity) {

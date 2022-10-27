@@ -47,15 +47,12 @@ public class GameController
         queryParams.put( "key", "STEAMKEY" );
         queryParams.put( "format", "json" );
         
-        if ( !hasResults )
-        {
-            fullGameList = requestProvider.setPath( "v0002" )
-                                  .setQueryParam( queryParams )
-                                  .addHeader( HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE )
-                                  .get();
+        fullGameList = requestProvider.setPath( "v0002" )
+                                      .setQueryParam( queryParams )
+                                      .addHeader( HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE )
+                                      .get();
 
-            hasResults = true;
-        }
+        hasResults = true;
         
         Map<String, Object> app = (Map<String, Object>)fullGameList.get( "applist" );
         ArrayList<Object> appList = (ArrayList<Object>)app.get( "apps" );
@@ -92,32 +89,40 @@ public class GameController
 
     public List<Game> getMostPlayedGames() throws Exception
     {
-        queryParams.clear();
-        queryParams.put("", APIKEY );
-        RequestProvider requestProvider = new RequestProvider( steamUrlApi );
-
-
-        Map<String, Object> json = requestProvider.setPath( "ISteamChartsService/GetMostPlayedGames/v1/?" + APIKEY )
-                                                  .setQueryParam(queryParams)
-                                                  .addHeader( HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE )
-                                                  .get();
-
-        Map<String, Object> response = (Map<String, Object>)json.get( "response" );
-        ArrayList<Map<String,Object>> ranks = (ArrayList<Map<String,Object>>)response.get( "ranks" );
-
-        for( Map<String,Object> game : ranks )
+        if ( games.isEmpty() )
         {
-            if ( Math.round(  Double.parseDouble( game.get( "rank" ).toString() ) ) != 25 )
+            queryParams.clear();
+            queryParams.put("", APIKEY );
+            RequestProvider requestProvider = new RequestProvider( steamUrlApi );
+    
+    
+            Map<String, Object> json = requestProvider.setPath( "ISteamChartsService/GetMostPlayedGames/v1/?" + APIKEY )
+                                                      .setQueryParam(queryParams)
+                                                      .addHeader( HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE )
+                                                      .get();
+    
+            Map<String, Object> response = (Map<String, Object>)json.get( "response" );
+            ArrayList<Map<String,Object>> ranks = (ArrayList<Map<String,Object>>)response.get( "ranks" );
+    
+            for( Map<String,Object> game : ranks )
             {
-                games.add( getGameByAppId( game.get("appid").toString().replace( ".0", "") ) );
-            }
-
-            else
-            {
-                break;
+                if ( Math.round(  Double.parseDouble( game.get( "rank" ).toString() ) ) != 21 )
+                {
+                    games.add( getGameByAppId( game.get("appid").toString().replace( ".0", "") ) );
+                }
+    
+                else
+                {
+                    break;
+                }
             }
         }
 
         return games;
+    }
+
+    public ArrayList<Game> getGames()
+    {
+        return this.games;
     }
 }

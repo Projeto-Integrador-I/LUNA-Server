@@ -32,8 +32,9 @@ public class ApiBuilder
                 Map<String, Object> priceOverview = (Map <String,Object>)appData.get( "price_overview" );
                 Map<String, Object> releaseDateMap = (Map <String,Object>)appData.get( "release_date" );
     
+                game.setCoverLink( appData.get( "header_image" ).toString() );
+
                 HashMap<String, String> images = new HashMap<>();
-                images.put( "headerImage", appData.get( "header_image" ).toString() );
     
                 ArrayList<Map<String, Object>>  screenShotsList= (ArrayList< Map<String, Object> >)appData.get( "screenshots" );
     
@@ -110,7 +111,7 @@ public class ApiBuilder
         movie.setOriginalTitle( json.get( "original_title" ) != null ? json.get( "original_title" ).toString() :  json.get( "original_name" ).toString() );
         movie.setOverView( json.get( "overview" ).toString() );
         movie.setPopularity( Double.parseDouble( json.get( "popularity" ).toString() ) );
-        movie.setPosterPath( json.get( "poster_path" ) != null ? IMAGEPATH + json.get( "poster_path" ).toString() : "" );
+        movie.setCoverLink( json.get( "poster_path" ) != null ? IMAGEPATH + json.get( "poster_path" ).toString() : "" );
         
         ArrayList<Map<String, Object>>  companiesMap = (ArrayList< Map<String, Object> >)json.get( "production_companies" );
         ArrayList<String> companies = new ArrayList<>();
@@ -183,7 +184,7 @@ public class ApiBuilder
                     if ( images != null )
                     {
                         imagesLink.add( images.get( "smallThumbnail" ) != null ? images.get( "smallThumbnail" ).toString() : "n/d" );
-                        imagesLink.add( images.get( "smallThumbnail" ) != null ? images.get( "smallThumbnail" ).toString() : "n/d" );
+                       book.setCoverLink( images.get( "thumbnail" ) != null ? images.get( "thumbnail" ).toString() : "n/d" );
                     }
 
                     book.setImageLinks( imagesLink );

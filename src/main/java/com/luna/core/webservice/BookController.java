@@ -38,6 +38,7 @@ public class BookController
         HashMap<String, String> queryParams = new HashMap<String, String>();
         queryParams.put( "q", name );
         queryParams.put( "key", APIKEY );
+        queryParams.put("maxResults", "25");
         RequestProvider requestProvider = new RequestProvider( gBooksUrl );
 
         Map<String, Object> json = requestProvider.setPath( "v1/volumes" )
