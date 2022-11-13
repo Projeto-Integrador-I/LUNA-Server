@@ -87,7 +87,7 @@ public class ApiBuilder
             {
                 if ( key.equals( "backdrop_path" ) || key.equals( "poster_path" )  )
                 {
-                    belongsToCollection.replace( key, IMAGEPATH + belongsToCollection.get( key ).toString() );
+                    belongsToCollection.replace( key, IMAGEPATH + (belongsToCollection.get( key ) != null ? belongsToCollection.get( key ).toString() : "n/d" ) );
                 }
             }
 
