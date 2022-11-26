@@ -50,7 +50,8 @@ public class MediaResource
         {
             List<Media> medias = new ArrayList<Media>();
             medias.addAll( gameController.getGamesByName( name )  == null ? new ArrayList<Media>() : gameController.getGamesByName( name ) );
-            medias.addAll( movieController.getMovieByName( name ) == null ? new ArrayList<Media>() : movieController.getMovieByName( name ) );
+            medias.addAll( movieController.getMovieByName( name, MovieController.TYPE_MOVIE  ) == null ? new ArrayList<Media>() : movieController.getMovieByName( name , MovieController.TYPE_MOVIE ) );
+            medias.addAll( movieController.getMovieByName( name, MovieController.TYPE_TV  ) == null ? new ArrayList<Media>() : movieController.getMovieByName( name , MovieController.TYPE_TV ) );
             medias.addAll( bookController.getBookByName( name )   == null ? new ArrayList<Media>() : bookController.getBookByName( name ));
 
             if( medias.isEmpty() )

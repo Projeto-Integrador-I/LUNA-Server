@@ -18,7 +18,7 @@ public class MovieController
     public static final int TYPE_MOVIE = 0;
     public static final int TYPE_TV = 1;
 
-    private static String[] categories =
+    public static String[] categories =
     {
         "movie/",
         "tv/"
@@ -54,12 +54,11 @@ public class MovieController
                                                   .addHeader( HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE )
                                                   .get();
 
-        return ApiBuilder.buildMovie( json, id );
+        return ApiBuilder.buildMovie( json, id, type );
     }
 
-    public List<Movie> getMovieByName( String name ) throws Exception
+    public List<Movie> getMovieByName( String name, int type ) throws Exception
     {
-        //https://api.themoviedb.org/3/search/movie?api_key={api_key}&query=Jack+Reacher
         name = name.replaceAll( " ", "+" );
 
         HashMap<String, String> queryParams = new HashMap<String, String>();
@@ -69,7 +68,7 @@ public class MovieController
         
         RequestProvider requestProvider = new RequestProvider( tmdbUrl );
 
-        Map<String, Object> json = requestProvider.setPath( "search/movie" )
+        Map<String, Object> json = requestProvider.setPath( "search/" +  ( type == TYPE_MOVIE ? "movie" : "tv" ) )
                                                   .setQueryParam( queryParams )
                                                   .addHeader( HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE )
                                                   .get();
@@ -79,7 +78,7 @@ public class MovieController
 
         for ( Map<String,Object> m : moviesMap )
         {
-            movies.add( getMovieById(  m.get("id").toString().split("\\.")[0], TYPE_MOVIE ) );
+            movies.add( getMovieById(  m.get("id").toString().split("\\.")[0], type ) );
         }
         
         return movies;

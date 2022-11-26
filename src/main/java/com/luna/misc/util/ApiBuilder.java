@@ -9,6 +9,7 @@ import com.luna.core.data.Book;
 import com.luna.core.data.Game;
 import com.luna.core.data.Media;
 import com.luna.core.data.Movie;
+import com.luna.core.webservice.MovieController;
 
 public class ApiBuilder 
 {
@@ -73,7 +74,7 @@ public class ApiBuilder
         return game;
     }
 
-    public static Movie buildMovie( Map<String, Object> json, String id ) throws Exception
+    public static Movie buildMovie( Map<String, Object> json, String id, int type ) throws Exception
     {   
         Movie movie = new Movie();
 
@@ -132,7 +133,7 @@ public class ApiBuilder
         movie.setTitle( json.get( "title" ) != null ? json.get( "title" ).toString() : json.get( "name" ).toString()  );
 
         movie.setType( Media.TYPE_MOVIE );
-        movie.webLink( "https://www.themoviedb.org/movie/" + movie.getApiId().substring( 0, movie.getApiId().indexOf(".") ) + "?locale=BR" );
+        movie.webLink( "https://www.themoviedb.org/" + MovieController.categories[type] + movie.getApiId().substring( 0, movie.getApiId().indexOf(".") ) + "?locale=BR" );
 
         if ( json.get( "seasons" ) != null )
         {

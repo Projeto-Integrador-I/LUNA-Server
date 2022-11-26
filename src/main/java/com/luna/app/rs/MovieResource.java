@@ -49,12 +49,11 @@ public class MovieResource
     }
 
     @GetMapping( value="movies" )
-    public ResponseEntity<String> getMovieByname( @RequestParam( "name" ) String name ) 
+    public ResponseEntity<String> getMovieByname( @RequestParam( "name" ) String name, @RequestParam( "id" ) String id ) 
     {
         try 
         {
-            List<Movie> movies = controller.getMovieByName( name );
-
+            List<Movie> movies = controller.getMovieByName( name, Integer.valueOf( id ) ); 
             if ( movies == null )
             {
                 return notFound( "movie not found for the given name" );
