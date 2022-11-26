@@ -185,7 +185,7 @@ public class ApiBuilder
 
                     if ( images != null )
                     {
-                        imagesLink.add( images.get( "smallThumbnail" ) != null ? images.get( "smallThumbnail" ).toString() : "n/d" );
+                       imagesLink.add( images.get( "smallThumbnail" ) != null ? images.get( "smallThumbnail" ).toString() : "n/d" );
                        book.setCoverLink( images.get( "thumbnail" ) != null ? images.get( "thumbnail" ).toString() : "n/d" );
                     }
 

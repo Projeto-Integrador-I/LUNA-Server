@@ -86,6 +86,11 @@ public class MovieController
     }
 
     public List<Movie> getTrendingMovies() throws Exception
+    {   
+        return getTrendingMovies( "week" );
+    }
+
+    public List<Movie> getTrendingMovies( String period ) throws Exception
     {
         HashMap<String, String> queryParams = new HashMap<String, String>();
         queryParams.put( "api_key", APIKEY );
@@ -93,7 +98,7 @@ public class MovieController
         
         RequestProvider requestProvider = new RequestProvider( tmdbUrl );
 
-        Map<String, Object> json = requestProvider.setPath( "trending/movie/week" )
+        Map<String, Object> json = requestProvider.setPath( "trending/movie/" + period )
                                                   .setQueryParam( queryParams )
                                                   .addHeader( HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE )
                                                   .get();
@@ -108,8 +113,12 @@ public class MovieController
                                                   
         return movies;
     }
+    public List<Movie> getTrendingTv() throws Exception
+    {
+        return getTrendingTv( "week" ); 
+    }
 
-    public List<Movie> getTrandingTv() throws Exception
+    public List<Movie> getTrendingTv( String period ) throws Exception
     {
         HashMap<String, String> queryParams = new HashMap<String, String>();
         queryParams.put( "api_key", APIKEY );
@@ -117,7 +126,7 @@ public class MovieController
         
         RequestProvider requestProvider = new RequestProvider( tmdbUrl );
 
-        Map<String, Object> json = requestProvider.setPath( "trending/tv/week" )
+        Map<String, Object> json = requestProvider.setPath( "trending/tv/" + period )
                                                   .setQueryParam( queryParams )
                                                   .addHeader( HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE )
                                                   .get();
@@ -131,5 +140,18 @@ public class MovieController
         }
                                                   
         return movies;
+    }
+
+    public List<Movie> getAllTrandings() throws Exception
+    {
+        List<Movie> moviesList = new ArrayList<>();
+        
+        moviesList.addAll( getTrendingTv() );
+        moviesList.addAll( getTrendingMovies() );
+        moviesList.addAll( getTrendingTv("day") );
+        moviesList.addAll( getTrendingMovies("day") );
+
+
+        return moviesList;
     }
 }

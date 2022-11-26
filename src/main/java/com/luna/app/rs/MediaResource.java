@@ -2,6 +2,7 @@ package com.luna.app.rs;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
@@ -61,6 +62,26 @@ public class MediaResource
         } 
         catch ( Exception e ) 
         {   
+            return internalServerError( e );
+        }
+    }
+
+    @GetMapping( value="media/getall" )
+    public ResponseEntity<String> getMediasList()
+    {
+        try 
+        {
+            List<Media> medias = new ArrayList<Media>();
+
+            medias.addAll( gameController.getTrandingGames() );
+            medias.addAll( movieController.getAllTrandings() );
+
+            Collections.shuffle( medias );
+            return ok( gson.toJson( medias ) );
+        }
+
+        catch ( Exception e )
+        {
             return internalServerError( e );
         }
     }

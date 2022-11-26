@@ -98,7 +98,7 @@ public class MovieResource
     {
         try 
         {
-            List<Movie> tvs = controller.getTrandingTv();
+            List<Movie> tvs = controller.getTrendingTv();
 
             return ok( gson.toJson( tvs ) );
         }

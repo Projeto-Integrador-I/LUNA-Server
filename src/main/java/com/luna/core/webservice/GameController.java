@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import org.apache.logging.log4j.message.MapMessage;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 
@@ -120,6 +121,64 @@ public class GameController
 
         return games;
     }
+    
+    public List<Game> getTrandingGames() throws Exception
+    {
+        RequestProvider requestProvider = new RequestProvider( steamUrlApi );
+
+        List<Game> gamesList = new ArrayList<>();
+
+        Map<String, Object> response  = new HashMap<>();
+        Map<String, Object> pageItems = new HashMap<>();
+        Map<String, Object> json      = new HashMap<>();
+
+        ArrayList<Map<String,Object>> ranks = new ArrayList<>();
+        ArrayList<Map<String,Object>> pages = new ArrayList<>();
+
+        if ( gamesList.isEmpty() )
+        {
+            queryParams.clear();
+            queryParams.put("", APIKEY );
+    
+           json = requestProvider.setPath( "ISteamChartsService/GetMostPlayedGames/v1/?" + APIKEY )
+                                 .setQueryParam(queryParams)
+                                 .addHeader( HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE )
+                                 .get();
+    
+            response = (Map<String, Object>)json.get( "response" );
+            ranks = (ArrayList<Map<String,Object>>)response.get( "ranks" );
+    
+            for( Map<String,Object> game : ranks )
+            {
+                if ( Math.round(  Double.parseDouble( game.get( "rank" ).toString() ) ) != 100 )
+                {
+                    gamesList.add( getGameByAppId( game.get("appid").toString().replace( ".0", "") ) );
+                }
+    
+                else
+                {
+                    break;
+                }
+            }
+
+            json = requestProvider.setPath( "ISteamChartsService/GetTopReleasesPages/v1/?" + APIKEY )
+                                  .setQueryParam(queryParams)
+                                  .addHeader( HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE )
+                                  .get();
+
+            response  = (Map<String, Object>)json.get( "response" );
+            pages     = (ArrayList<Map<String,Object>>)response.get( "pages" );
+            pageItems = (Map<String, Object>)pages.get( 0 );
+    
+            for( Map<String,Object> id : (ArrayList<Map<String,Object>>)pageItems.get( "item_ids" ) )
+            {
+                gamesList.add( getGameByAppId( id.get("appid").toString().replace( ".0", "") ) );
+            }
+        }
+
+        return gamesList;
+    }
+
 
     public ArrayList<Game> getGames()
     {
