@@ -15,7 +15,8 @@ public class Movie
     private String originalTitle = "";
     private String overView = "";
     private String tagLine = "";
-    
+    private String webLink = "";
+
     private double runtime = 0;
     private double popularity = 0;
 
@@ -84,6 +85,15 @@ public class Movie
 
     public void setSeasons(int seasons) {
         this.seasons = seasons;
+    }
+
+        
+    public String webLink() {
+        return webLink;
+    }
+
+    public void webLink(String webLink) {
+        this.webLink = webLink;
     }
 
     public String getTagLine() {

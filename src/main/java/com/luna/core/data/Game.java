@@ -8,6 +8,7 @@ public class Game
         Media
 {
     private String name = "";
+    private String webLink = "";
     private double required_age = 0;
     private boolean is_free = false;
     private ArrayList<Object> dlcs = new ArrayList<>();
@@ -39,6 +40,17 @@ public class Game
     public void setName(String name)
     {
         this.name = name;
+    }
+
+    
+    public String getWebLink()
+    {
+        return name;
+    }
+ 
+    public void setWebLink(String webLink)
+    {
+        this.webLink = webLink;
     }
  
     public double getRequired_age()

@@ -49,6 +49,7 @@ public class ApiBuilder
     
                 game.setName( appData.get( "name" ).toString() != null ? appData.get( "name" ).toString() : "data not found");
                 game.setApiId( appData.get( "steam_appid" ).toString() ); 
+                game.setWebLink( "https://store.steampowered.com/app/" + game.getApiId().substring( 0, game.getApiId().indexOf(".") ) );
                 game.setIs_free( (boolean)appData.get( "is_free" ) );
                 game.setRequired_age( Double.parseDouble( appData.get( "required_age" ).toString() ) ); 
                 game.setDlcs( (ArrayList<Object>)appData.get( "dlc" ) );
@@ -131,6 +132,7 @@ public class ApiBuilder
         movie.setTitle( json.get( "title" ) != null ? json.get( "title" ).toString() : json.get( "name" ).toString()  );
 
         movie.setType( Media.TYPE_MOVIE );
+        movie.webLink( "https://www.themoviedb.org/movie/" + movie.getApiId().substring( 0, movie.getApiId().indexOf(".") ) + "?locale=BR" );
 
         if ( json.get( "seasons" ) != null )
         {
@@ -195,6 +197,7 @@ public class ApiBuilder
                     book.setType( Media.TYPE_BOOK );
 
                 }
+
                 books.add(book);
             }
         }
