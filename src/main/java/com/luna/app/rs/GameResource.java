@@ -28,6 +28,7 @@ public class GameResource
         try 
         {
             Game game = controller.getGameByAppId( appids );
+            
             if ( game == null )
             {
                 return notFound( "game not found for the given appids" );

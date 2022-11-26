@@ -112,7 +112,7 @@ public class UserResource
         try 
         {
             User systemUser = userDAO.get( id );
-            if( systemUser == null )
+            if ( systemUser == null )
             {    
                 return notFound( "no such user: " + id );
             }
@@ -125,10 +125,12 @@ public class UserResource
 
             return ok( gson.toJson( user ) );
         } 
-        catch( SQLException e )
+
+        catch ( SQLException e )
         {
             return badRequest( e.getMessage() );
         }
+
         catch ( Exception e ) 
         {   
             return internalServerError( e );
@@ -141,7 +143,8 @@ public class UserResource
         try 
         {
             User user = userDAO.get( id );
-            if( user == null )
+
+            if ( user == null )
             {    
                 return notFound( "no such user: " + id );
             }
@@ -150,6 +153,7 @@ public class UserResource
 
             return ok();
         } 
+        
         catch ( Exception e ) 
         {   
             return internalServerError( e );

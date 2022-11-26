@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import org.apache.logging.log4j.message.MapMessage;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 
@@ -25,8 +24,6 @@ public class GameController
     private static GameController defaultInstance;
     private Map<String, Object> fullGameList = new HashMap<>();
     private HashMap<String, String> queryParams = new HashMap<String, String>();
-
-    private boolean hasResults = false;
 
     private GameController() {}
 
@@ -53,8 +50,6 @@ public class GameController
                                       .addHeader( HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE )
                                       .get();
 
-        hasResults = true;
-        
         Map<String, Object> app = (Map<String, Object>)fullGameList.get( "applist" );
         ArrayList<Object> appList = (ArrayList<Object>)app.get( "apps" );
         

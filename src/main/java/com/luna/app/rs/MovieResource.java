@@ -37,10 +37,11 @@ public class MovieResource
             return ok( gson.toJson( movie ) );
         }
 
-        catch( RequestException e )
+        catch ( RequestException e )
         {
             return dynamicResponse( e.getMessage(), e.getCode() );
         }
+
         catch ( Exception e ) 
         {   
             return internalServerError( e );
@@ -62,10 +63,11 @@ public class MovieResource
             return ok( gson.toJson( movies ) );
         }
 
-        catch( RequestException e )
+        catch ( RequestException e )
         {
             return dynamicResponse( e.getMessage(), e.getCode() );
         }
+
         catch ( Exception e ) 
         {   
             return internalServerError( e );
@@ -82,10 +84,11 @@ public class MovieResource
             return ok( gson.toJson( movies ) );
         }
 
-        catch( RequestException e )
+        catch ( RequestException e )
         {
             return dynamicResponse( e.getMessage(), e.getCode() );
         }
+
         catch ( Exception e ) 
         {   
             return internalServerError( e );
@@ -103,7 +106,7 @@ public class MovieResource
             return ok( gson.toJson( tvs ) );
         }
 
-        catch( RequestException e )
+        catch ( RequestException e )
         {
             return dynamicResponse( e.getMessage(), e.getCode() );
         }

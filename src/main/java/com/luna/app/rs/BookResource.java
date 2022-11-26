@@ -41,6 +41,7 @@ public class BookResource
         {
             return dynamicResponse( e.getMessage(), e.getCode() );
         }
+        
         catch ( Exception e ) 
         {   
             return internalServerError( e );

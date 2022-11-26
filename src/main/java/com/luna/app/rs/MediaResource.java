@@ -77,6 +77,7 @@ public class MediaResource
             medias.addAll( movieController.getAllTrandings() );
 
             Collections.shuffle( medias );
+
             return ok( gson.toJson( medias ) );
         }
 
@@ -86,23 +87,20 @@ public class MediaResource
         }
     }
 
-
-
-
-
     @GetMapping( value="mediaLists/{id}" )
     public ResponseEntity<String> getMediaList( @PathVariable( "id" ) int id ) 
     {
         try 
         {
             MediaList mediaList = mediaListDAO.get( id );
-            if( mediaList == null )
+            if ( mediaList == null )
             {    
                 return notFound( "no such mediaList: " + id );
             }
 
             return ok( gson.toJson( mediaList ) );
         } 
+
         catch ( Exception e ) 
         {   
             return internalServerError( e );
@@ -115,13 +113,14 @@ public class MediaResource
         try 
         {
             List<MediaList> mediaLists = mediaListDAO.fetch();
-            if( mediaLists.isEmpty() )
+            if ( mediaLists.isEmpty() )
             {    
                 return noContent();
             }
 
             return ok( gson.toJson( mediaLists ) );
         } 
+
         catch ( Exception e ) 
         {   
             return internalServerError( e );
@@ -135,19 +134,20 @@ public class MediaResource
         {
             MediaList mediaList = gson.fromJson( body, MediaList.class );
 
-            if( userDAO.get( mediaList.getUserId() )  == null )
+            if ( userDAO.get( mediaList.getUserId() )  == null )
             {
                 return badRequest( "no such user: " + mediaList.getUserId() );
             }
 
-            mediaListDAO.add(mediaList);
+            mediaListDAO.add( mediaList );
 
             return created( gson.toJson( mediaList ) );
         } 
-        catch( SQLException e )
+        catch ( SQLException e )
         {
             return badRequest( e.getMessage() );
         }
+
         catch ( Exception e ) 
         {   
             return internalServerError( e );
@@ -160,14 +160,14 @@ public class MediaResource
         try 
         {
             MediaList systemMediaList = mediaListDAO.get( id );
-            if( systemMediaList == null )
+            if ( systemMediaList == null )
             {    
                 return notFound( "no such mediaList: " + id );
             }
 
             MediaList mediaList = gson.fromJson( body, MediaList.class );
 
-            if( userDAO.get( mediaList.getUserId() )  == null )
+            if ( userDAO.get( mediaList.getUserId() )  == null )
             {
                 return badRequest( "no such user: " + mediaList.getUserId() );
             }
@@ -177,10 +177,12 @@ public class MediaResource
 
             return ok( gson.toJson( mediaList ) );
         } 
+
         catch( SQLException e )
         {
             return badRequest( e.getMessage() );
         }
+
         catch ( Exception e ) 
         {   
             return internalServerError( e );
@@ -193,7 +195,8 @@ public class MediaResource
         try 
         {
             MediaList mediaList = mediaListDAO.get( id );
-            if( mediaList == null )
+
+            if ( mediaList == null )
             {    
                 return notFound( "no such mediaList: " + id );
             }
@@ -202,6 +205,7 @@ public class MediaResource
 
             return ok();
         } 
+
         catch ( Exception e ) 
         {   
             return internalServerError( e );
@@ -215,18 +219,20 @@ public class MediaResource
         try 
         {
             MediaList mediaList = mediaListDAO.get( mediaLists_id );
-            if( mediaList == null )
+
+            if ( mediaList == null )
             {    
                 return notFound( "no such mediaList: " + mediaLists_id );
             }
 
             Media media = mediaDAO.get( medias_id );
-            if( media == null )
+
+            if ( media == null )
             {    
                 return notFound( "no such media: " + medias_id );
             }
 
-            mediaListDAO.addMediaToList(mediaList, media);
+            mediaListDAO.addMediaToList( mediaList, media );
             return ok();
         } 
         catch ( Exception e ) 

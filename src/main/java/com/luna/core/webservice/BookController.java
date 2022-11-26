@@ -32,13 +32,14 @@ public class BookController
 
     public List<Book> getBookByName( String name ) throws Exception 
     {
-        //https://www.googleapis.com/books/v1/volumes?q=flowers+inauthor:keyes&key=yourAPIKey
         name = name.replaceAll( " ", "+" );
 
         HashMap<String, String> queryParams = new HashMap<String, String>();
+
         queryParams.put( "q", name );
         queryParams.put( "key", APIKEY );
         queryParams.put("maxResults", "25");
+        
         RequestProvider requestProvider = new RequestProvider( gBooksUrl );
 
         Map<String, Object> json = requestProvider.setPath( "v1/volumes" )

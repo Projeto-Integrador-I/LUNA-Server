@@ -113,6 +113,7 @@ public class MovieController
                                                   
         return movies;
     }
+    
     public List<Movie> getTrendingTv() throws Exception
     {
         return getTrendingTv( "week" ); 
@@ -150,7 +151,6 @@ public class MovieController
         moviesList.addAll( getTrendingMovies() );
         moviesList.addAll( getTrendingTv("day") );
         moviesList.addAll( getTrendingMovies("day") );
-
 
         return moviesList;
     }
