@@ -88,7 +88,6 @@ public class GameController
         if ( games.isEmpty() )
         {
             queryParams.clear();
-            queryParams.put("", APIKEY );
             RequestProvider requestProvider = new RequestProvider( steamUrlApi );
     
     
@@ -145,7 +144,7 @@ public class GameController
     
             for( Map<String,Object> game : ranks )
             {
-                if ( Math.round(  Double.parseDouble( game.get( "rank" ).toString() ) ) != 100 )
+                if ( Math.round(  Double.parseDouble( game.get( "rank" ).toString() ) ) != 50 )
                 {
                     gamesList.add( getGameByAppId( game.get("appid").toString().replace( ".0", "") ) );
                 }
