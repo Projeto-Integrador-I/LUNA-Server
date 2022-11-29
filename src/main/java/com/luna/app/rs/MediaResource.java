@@ -43,6 +43,26 @@ public class MediaResource
     private final Gson gson = new Gson();
 
 
+    @GetMapping( value="mediaLists/{id}/medias")
+    public ResponseEntity<String> getMediasByMediaList( @PathVariable( "id" ) int id ) 
+    {
+        try 
+        {
+            MediaList mediaList = mediaListDAO.get( id );
+            if ( mediaList == null )
+            {    
+                return notFound( "no such mediaList: " + id );
+            }
+
+            return ok( gson.toJson( mediaDAO.getByMediaListId( id ) ) );
+        } 
+
+        catch ( Exception e ) 
+        {   
+            return internalServerError( e );
+        }
+    }
+
     @GetMapping( value="media/search" )
     public ResponseEntity<String> getMediaList( @RequestParam( "name" ) String name ) 
     {
@@ -213,6 +233,35 @@ public class MediaResource
         }
     }
 
+
+    @DeleteMapping( value="mediaLists/{mediaLists_id}/medias/{medias_id}" )
+    public ResponseEntity<String> deleteMediaToMediaList( @PathVariable( "mediaLists_id" ) int mediaLists_id, @PathVariable( "medias_id" ) int medias_id ) 
+    {
+        try 
+        {
+            MediaList mediaList = mediaListDAO.get( mediaLists_id );
+
+            if ( mediaList == null )
+            {    
+                return notFound( "no such mediaList: " + mediaLists_id );
+            }
+
+            Media media = mediaDAO.get( medias_id );
+
+            if ( media == null )
+            {    
+                return notFound( "no such media: " + medias_id );
+            }
+
+            mediaListDAO.deleteMediaToList( mediaList, media );
+            return ok();
+        } 
+        catch ( Exception e ) 
+        {   
+            return internalServerError( e );
+        }
+
+    }
 
     @PostMapping( value="mediaLists/{mediaLists_id}/medias/{medias_id}" )
     public ResponseEntity<String> addMediaToMediaList( @PathVariable( "mediaLists_id" ) int mediaLists_id, @PathVariable( "medias_id" ) int medias_id ) 
