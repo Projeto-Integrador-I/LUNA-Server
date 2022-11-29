@@ -43,6 +43,26 @@ public class MediaResource
     private final Gson gson = new Gson();
 
 
+    @GetMapping( value="mediaLists/{id}/medias")
+    public ResponseEntity<String> getMediasByMediaList( @PathVariable( "id" ) int id ) 
+    {
+        try 
+        {
+            MediaList mediaList = mediaListDAO.get( id );
+            if ( mediaList == null )
+            {    
+                return notFound( "no such mediaList: " + id );
+            }
+
+            return ok( gson.toJson( mediaDAO.getByMediaListId( id ) ) );
+        } 
+
+        catch ( Exception e ) 
+        {   
+            return internalServerError( e );
+        }
+    }
+
     @GetMapping( value="media/search" )
     public ResponseEntity<String> getMediaList( @RequestParam( "name" ) String name ) 
     {
