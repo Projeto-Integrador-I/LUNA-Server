@@ -45,6 +45,11 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-webflux'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+	implementation 'net.sf.jasperreports:jasperreports:6.18.1'
+	implementation 'javax.mail:mail:1.4'
+	implementation 'org.springframework.boot:spring-boot-starter-mail:3.0.0'
+	implementation 'com.lowagie:itext:2.1.7'
 }
 
 tasks.named('test') {
