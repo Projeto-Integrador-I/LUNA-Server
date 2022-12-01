@@ -175,6 +175,28 @@ public class MediaResource
         }        
     }
 
+    @PostMapping( value="medias" )
+    public ResponseEntity<String> addMedia( @RequestBody String body )
+    {
+        try 
+        {
+            Media media = gson.fromJson( body, Media.class );
+
+            mediaDAO.add( media );
+
+            return created( gson.toJson( media ) );
+        } 
+        catch ( SQLException e )
+        {
+            return badRequest( e.getMessage() );
+        }
+
+        catch ( Exception e ) 
+        {   
+            return internalServerError( e );
+        }        
+    }
+
     @PutMapping( value="mediaLists/{id}" )
     public ResponseEntity<String> updateMediaList( @RequestBody String body, @PathVariable( "id" ) int id )
     {
