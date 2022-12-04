@@ -97,7 +97,7 @@ public class MediaDAO
 
     public ArrayList<Media> getByMediaListId( int mediaListId ) throws SQLException
     {
-        return fetchMedias( "select * form " + TableMedia.TABLE_NAME +
+        return fetchMedias( "select * from  " + TableMedia.TABLE_NAME +
                             " join " + TableListsMedias.TABLE_NAME + " on " + TableListsMedias.MEDIAS_ID + " = " + TableMedia.ID +
                             " where " + TableListsMedias.LISTS_ID   + " = " + mediaListId
         );
