@@ -159,7 +159,7 @@ public class MediaListDAO
             mediaDAO.update( media );
         }
 
-        execute( "insert into " + TableListsMedias.TABLE_NAME + " ( " + mediaList.getId() + ", " + media.getId() + " )"  );
+        execute( "insert into " + TableListsMedias.TABLE_NAME + " values( " + mediaList.getId() + ", " + media.getId() + " )"  );
     }
 
     public void deleteMediaToList( MediaList mediaList, Media media ) throws SQLException 

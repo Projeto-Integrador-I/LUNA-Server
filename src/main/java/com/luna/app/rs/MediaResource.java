@@ -63,51 +63,6 @@ public class MediaResource
         }
     }
 
-    @GetMapping( value="media/search" )
-    public ResponseEntity<String> getMediaList( @RequestParam( "name" ) String name ) 
-    {
-        try 
-        {
-            List<Media> medias = new ArrayList<Media>();
-            medias.addAll( gameController.getGamesByName( name )  == null ? new ArrayList<Media>() : gameController.getGamesByName( name ) );
-            medias.addAll( movieController.getMovieByName( name, MovieController.TYPE_MOVIE  ) == null ? new ArrayList<Media>() : movieController.getMovieByName( name , MovieController.TYPE_MOVIE ) );
-            medias.addAll( movieController.getMovieByName( name, MovieController.TYPE_TV  ) == null ? new ArrayList<Media>() : movieController.getMovieByName( name , MovieController.TYPE_TV ) );
-            medias.addAll( bookController.getBookByName( name )   == null ? new ArrayList<Media>() : bookController.getBookByName( name ));
-
-            if( medias.isEmpty() )
-            {    
-                return notFound( "no medias found" );
-            }
-
-            return ok( gson.toJson( medias ) );
-        } 
-        catch ( Exception e ) 
-        {   
-            return internalServerError( e );
-        }
-    }
-
-    @GetMapping( value="media/getall" )
-    public ResponseEntity<String> getMediasList()
-    {
-        try 
-        {
-            List<Media> medias = new ArrayList<Media>();
-
-            medias.addAll( gameController.getTrandingGames() );
-            medias.addAll( movieController.getAllTrandings() );
-
-            Collections.shuffle( medias );
-
-            return ok( gson.toJson( medias ) );
-        }
-
-        catch ( Exception e )
-        {
-            return internalServerError( e );
-        }
-    }
-
     @GetMapping( value="mediaLists/{id}" )
     public ResponseEntity<String> getMediaList( @PathVariable( "id" ) int id ) 
     {
@@ -175,28 +130,6 @@ public class MediaResource
         }        
     }
 
-    @PostMapping( value="medias" )
-    public ResponseEntity<String> addMedia( @RequestBody String body )
-    {
-        try 
-        {
-            Media media = gson.fromJson( body, Media.class );
-
-            mediaDAO.add( media );
-
-            return created( gson.toJson( media ) );
-        } 
-        catch ( SQLException e )
-        {
-            return badRequest( e.getMessage() );
-        }
-
-        catch ( Exception e ) 
-        {   
-            return internalServerError( e );
-        }        
-    }
-
     @PutMapping( value="mediaLists/{id}" )
     public ResponseEntity<String> updateMediaList( @RequestBody String body, @PathVariable( "id" ) int id )
     {
@@ -222,6 +155,73 @@ public class MediaResource
         } 
 
         catch( SQLException e )
+        {
+            return badRequest( e.getMessage() );
+        }
+
+        catch ( Exception e ) 
+        {   
+            return internalServerError( e );
+        }        
+    }
+
+    @GetMapping( value="media/search" )
+    public ResponseEntity<String> getMediaList( @RequestParam( "name" ) String name ) 
+    {
+        try 
+        {
+            List<Media> medias = new ArrayList<Media>();
+            medias.addAll( gameController.getGamesByName( name )  == null ? new ArrayList<Media>() : gameController.getGamesByName( name ) );
+            medias.addAll( movieController.getMovieByName( name, MovieController.TYPE_MOVIE  ) == null ? new ArrayList<Media>() : movieController.getMovieByName( name , MovieController.TYPE_MOVIE ) );
+            medias.addAll( movieController.getMovieByName( name, MovieController.TYPE_TV  ) == null ? new ArrayList<Media>() : movieController.getMovieByName( name , MovieController.TYPE_TV ) );
+            medias.addAll( bookController.getBookByName( name )   == null ? new ArrayList<Media>() : bookController.getBookByName( name ));
+
+            if( medias.isEmpty() )
+            {    
+                return notFound( "no medias found" );
+            }
+
+            return ok( gson.toJson( medias ) );
+        } 
+        catch ( Exception e ) 
+        {   
+            return internalServerError( e );
+        }
+    }
+
+    @GetMapping( value="media/getall" )
+    public ResponseEntity<String> getMediasList()
+    {
+        try 
+        {
+            List<Media> medias = new ArrayList<Media>();
+
+            medias.addAll( gameController.getTrandingGames() );
+            medias.addAll( movieController.getAllTrandings() );
+
+            Collections.shuffle( medias );
+
+            return ok( gson.toJson( medias ) );
+        }
+
+        catch ( Exception e )
+        {
+            return internalServerError( e );
+        }
+    }
+
+    @PostMapping( value="medias" )
+    public ResponseEntity<String> addMedia( @RequestBody String body )
+    {
+        try 
+        {
+            Media media = gson.fromJson( body, Media.class );
+
+            mediaDAO.add( media );
+
+            return created( gson.toJson( media ) );
+        } 
+        catch ( SQLException e )
         {
             return badRequest( e.getMessage() );
         }

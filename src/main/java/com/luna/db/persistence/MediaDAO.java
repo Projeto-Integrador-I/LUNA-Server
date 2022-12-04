@@ -65,14 +65,14 @@ public class MediaDAO
     {
         execute(
             "update " + TableMedia.TABLE_NAME + "\n" +
-            "set\n" +
+            "set \n" +
             "        " + TableMedia.TITLE        + " = '" + subject.getTitle()       + "',\n" +
             "        " + TableMedia.YEAR         + " = '" + subject.getYear()        + "',\n" +
-            "        " + TableMedia.DESCRIPTION  + " = '" + subject.getDescription() + ",'\n" +
-            "        " + TableMedia.TYPE         + " = '" + subject.getType()        + ",'\n" +
-            "        " + TableMedia.API_ID       + " = '" + subject.getApiId()       + ",'\n" +
+            "        " + TableMedia.DESCRIPTION  + " = '" + subject.getDescription() + "',\n" +
+            "        " + TableMedia.TYPE         + " = '" + subject.getType()        + "',\n" +
+            "        " + TableMedia.API_ID       + " = '" + subject.getApiId()       + "',\n" +
             "        " + TableMedia.COVER        + " = '" + subject.getCoverLink()   + "'\n"  +
-            "where\n" +
+            "where \n" +
             "        " + TableMedia.ID + " = " + subject.getId()
         );
     }
