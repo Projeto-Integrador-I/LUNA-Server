@@ -23,24 +23,32 @@ public class MediaDAO
     @Override
     public void add( Media media ) throws SQLException 
     {
-        int lastId = getLastId( Schema.TableMedia.TABLE_NAME );
-        if( lastId == -1 )
+        Media dbMedia = getByApiId( media.getType(), media.getApiId() );
+        if( dbMedia != null )
         {
-            throw new SQLException( "unable to increment media id!" );
+            update( media );
         }
-
-        media.setId( lastId + 1 );
-        execute( 
-            "insert into " + TableMedia.TABLE_NAME + "\n" +
-            "   values( " + 
-                    media.getId()           + ", '" + 
-                    media.getTitle()        + "', '" + 
-                    media.getYear()         + "', '" + 
-                    media.getDescription()  + "', '" + 
-                    media.getType()         + "', '" + 
-                    media.getApiId()        + "', '" + 
-                    media.getCoverLink()    +  
-            "   ')" );
+        else
+        {
+            int lastId = getLastId( Schema.TableMedia.TABLE_NAME );
+            if( lastId == -1 )
+            {
+                throw new SQLException( "unable to increment media id!" );
+            }
+    
+            media.setId( lastId + 1 );
+            execute( 
+                "insert into " + TableMedia.TABLE_NAME + "\n" +
+                "   values( " + 
+                        media.getId()           + ", '" + 
+                        media.getTitle()        + "', '" + 
+                        media.getYear()         + "', '" + 
+                        media.getDescription()  + "', '" + 
+                        media.getType()         + "', '" + 
+                        media.getApiId()        + "', '" + 
+                        media.getCoverLink()    +  
+                "   ')" );
+        }
     }
 
     @Override
