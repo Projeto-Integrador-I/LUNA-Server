@@ -26,6 +26,7 @@ public class MediaDAO
         Media dbMedia = getByApiId( media.getType(), media.getApiId() );
         if( dbMedia != null )
         {
+            media.setId( dbMedia.getId() );
             update( media );
         }
         else
